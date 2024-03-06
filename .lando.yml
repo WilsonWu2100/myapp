@@ -2,7 +2,7 @@ name: myapp
 recipe: laravel
 config:
   webroot: ./public
-  php: '8.1'
+  php: '8.1' #7.4
   via: apache
   database: mysql
   cache: redis
