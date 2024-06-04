@@ -37,3 +37,6 @@ Route::post('/book/{id}/edit', [BookController::class, 'updateBook']);
 
 // Delete a book.
 Route::delete('/book/{id}/delete', [BookController::class, 'deleteBook'])->name('books.delete');
+
+// Search books.
+Route::get('/search', [BookController::class, 'searchBook'])->name('books.search');

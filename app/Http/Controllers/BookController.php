@@ -64,4 +64,15 @@ class BookController extends Controller
         $book->delete();
         return redirect()->back()->with('message','The book has been deleted successfully!');
     }
+
+    public function searchBook(Request $request)
+    {
+        $search = $request->input('search');
+        $results = Book::where('name', 'like', "%$search%")
+            ->orWhere('author', 'like', "%$search%")
+            ->orWhere('category', 'like', "%$search%")
+            ->orWhere('publisher', 'like', "%$search%")
+            ->get();
+        return view('books', ['books' => $results]);
+    }
 }

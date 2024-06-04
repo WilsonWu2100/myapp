@@ -7,6 +7,12 @@
     <body class="books_wrapper">
         <h2>Books Content Management System</h2>
         <p><a href="/book/add">Add New Book</a></p>
+        <p>
+            <form action="{{ route('books.search') }}" method="GET">
+                <input type="text" name="search" placeholder="Search books">
+                <button type="submit">Search</button>
+            </form>
+        </p>
         <table id="showBooksInfo" class="table table-bordered">
             <thead>
                 <tr>
