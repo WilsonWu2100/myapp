@@ -21,4 +21,10 @@ Route::get('/', function () {
 
 Route::get('/books', [BookController::class, 'getAllBooks']);
 
+Route::get('/book/{id}', [BookController::class, 'showBook']);
 
+Route::get('/add_book', function () {
+    return view('add_book');
+})->name('add_book');
+
+Route::post('/add_book', [BookController::class, 'createBook']);
