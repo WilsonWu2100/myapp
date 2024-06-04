@@ -12,56 +12,56 @@
                     {{ session()->get('message') }}
                 </h6>
             @endif
-            <form action = "/book/add" method="post">
+            <form action = "/book/{{ $book->id }}/edit" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <table>
                     <tr>
                         <td>Name</td>
-                        <td><input type='text' name='name'/></td>
+                        <td><input type='text' name='name' value="{{ $book->name }}"/></td>
                     </tr>
                     <tr>
                         <td>Image</td>
-                        <td><input type='text' name='image'/></td>
+                        <td><input type='text' name='image' value="{{ $book->image }}"/></td>
                     </tr>
                     <tr>
                         <td>Isbn</td>
-                        <td><input type='text' name='isbn'/></td>
+                        <td><input type='text' name='isbn' value="{{ $book->isbn }}"/></td>
                     </tr>
                     <tr>
                         <td>Author</td>
-                        <td><input type='text' name='author'/></td>
+                        <td><input type='text' name='author' value="{{ $book->author }}"/></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><input type='text' name='description'/></td>
+                        <td><input type='text' name='description' value="{{ $book->description }}"/></td>
                     </tr>
                     <tr>
                         <td>Category</td>
-                        <td><input type='text' name='category'/></td>
+                        <td><input type='text' name='category' value="{{ $book->category }}"/></td>
                     </tr>
                     <tr>
                         <td>Ratings</td>
-                        <td><input type='text' name='ratings'/></td>
+                        <td><input type='text' name='ratings' value="{{ $book->ratings }}"/></td>
                     </tr>
                     <tr>
                         <td>Price</td>
-                        <td><input type='text' name='price'/></td>
+                        <td><input type='text' name='price' value="{{ $book->price }}"/></td>
                     </tr>
                     <tr>
                         <td>Stock</td>
-                        <td><input type='text' name='stock'/></td>
+                        <td><input type='text' name='stock' value="{{ $book->stock }}"/></td>
                     </tr>
                     <tr>
                         <td>Publisher</td>
-                        <td><input type='text' name='publisher'/></td>
+                        <td><input type='text' name='publisher' value="{{ $book->publisher }}"/></td>
                     </tr>
                     <tr>
                         <td>Publication Date</td>
-                        <td><input type='text' name='publication_date'/></td>
+                        <td><input type='text' name='publication_date' value="{{ $book->publication_date }}"/></td>
                     </tr>
                     <tr>
                         <td colspan='2'>
-                            <input type='submit' value="Add Book"/>
+                            <input type='submit' value="Update Book"/>
                         </td>
                     </tr>
                 </table>

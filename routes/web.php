@@ -19,12 +19,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/books', [BookController::class, 'getAllBooks']);
+// List all books.
+Route::get('/books', [BookController::class, 'getAllBooks'])->name('books');
 
-Route::get('/book/{id}', [BookController::class, 'showBook']);
+// View book details.
+Route::get('/book/{id}/view', [BookController::class, 'showBook']);
 
-Route::get('/add_book', function () {
+// Add a new book.
+Route::get('/book/add', function () {
     return view('add_book');
-})->name('add_book');
+})->name('books.add');
+Route::post('/book/add', [BookController::class, 'createBook']);
 
-Route::post('/add_book', [BookController::class, 'createBook']);
+// Update a book.
+Route::get('/book/{id}/edit', [BookController::class, 'showBook']);
+Route::post('/book/{id}/edit', [BookController::class, 'updateBook']);
+
+// Delete a book.
+Route::delete('/book/{id}/delete', [BookController::class, 'deleteBook'])->name('books.delete');

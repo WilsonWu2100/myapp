@@ -11,6 +11,7 @@
             <div>Image: <span>{{ $book['image'] }}</span></div>
             <div>Isbn: <span>{{ $book['isbn'] }}</span></div>
             <div>Author: <span>{{ $book['author'] }}</span></div>
+            <div>Description: <span>{{ $book['description'] }}</span></div>
             <div>Category: <span>{{ $book['category'] }}</span></div>
             <div>Ratings: <span>{{ $book['ratings'] }}</span></div>
             <div>Price: <span>{{ $book['price'] }}</span></div>
