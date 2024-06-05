@@ -31,8 +31,4 @@ class Book extends Model
         'publisher',
         'publication_date',
     ];
-
-   /* public static function index() {
-        return Book::all();
-    }*/
 }

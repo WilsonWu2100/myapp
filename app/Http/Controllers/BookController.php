@@ -11,7 +11,9 @@ class BookController extends Controller
 
     public function getAllBooks()
     {
-        return view('books', ['books' => Book::all()]);
+        return view('books', [
+            'books' => Book::paginate(10)
+        ]);
     }
 
     public function showBook($id)

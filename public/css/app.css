@@ -41,3 +41,10 @@ body .operation {
 body .operation div {
   padding: 0 4px;
 }
+body .pagination_wrapper {
+  text-align: center;
+}
+body .pagination_wrapper ul li {
+  display: inline;
+  font-size: 20px;
+}

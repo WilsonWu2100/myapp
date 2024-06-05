@@ -61,5 +61,10 @@
                 </tr>
             @endforeach
         </table>
+
+        {{-- Pagination --}}
+        <div class="pagination_wrapper">
+            {!! $books->links() !!}
+        </div>
     </div>
 @endsection

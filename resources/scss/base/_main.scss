@@ -49,4 +49,13 @@ body {
             padding: 0 4px;
         }
     }
+
+    .pagination_wrapper {
+        text-align: center;
+
+        ul li {
+            display: inline;
+            font-size: 20px;
+        }
+    }
 }
