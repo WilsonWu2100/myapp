@@ -32,6 +32,10 @@ body {
         }
     }
 
+    #bookTable {
+        width: 100%;
+    }
+
     .search {
         border-radius: 4px;
         padding: 6px 8px;
@@ -63,5 +67,9 @@ body {
             display: inline;
             font-size: 20px;
         }
+    }
+
+    .alert-success {
+        color: red;
     }
 }

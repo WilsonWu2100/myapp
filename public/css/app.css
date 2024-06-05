@@ -26,6 +26,9 @@ body table select {
 body table .publication_date {
   width: 120px;
 }
+body #bookTable {
+  width: 100%;
+}
 body .search {
   border-radius: 4px;
   padding: 6px 8px;
@@ -52,4 +55,7 @@ body .pagination_wrapper {
 body .pagination_wrapper ul li {
   display: inline;
   font-size: 20px;
+}
+body .alert-success {
+  color: red;
 }

@@ -5,9 +5,9 @@
         <h2>Books Content Management System</h2>
         <div>
             @if(session()->has('message'))
-                <h6 class="alert alert-success">
+                <h5 class="alert alert-success">
                     {{ session()->get('message') }}
-                </h6>
+                </h5>
             @endif
             <form action = "/book/{{ $book->id }}/edit" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
