@@ -17,8 +17,12 @@ body {
             padding: 8px;
         }
 
-        input[type="text"] {
+        input[type="text"], textarea {
             width: 400px;
+        }
+
+        select {
+            width: 50px;
         }
     }
 

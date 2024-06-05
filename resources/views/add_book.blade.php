@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><input type='text' name='description'/></td>
+                        <td><textarea name='description' rows="5" cols="50"></textarea></td>
                     </tr>
                     <tr>
                         <td>Category</td>
@@ -38,7 +38,15 @@
                     </tr>
                     <tr>
                         <td>Ratings</td>
-                        <td><input type='text' name='ratings'/></td>
+                        <td>
+                            <select name="ratings">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Price</td>

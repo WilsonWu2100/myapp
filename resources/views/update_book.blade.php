@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><input type='text' name='description' value="{{ $book->description }}"/></td>
+                        <td><textarea name='description' rows="5" cols="50">{{ $book->description }}</textarea></td>
                     </tr>
                     <tr>
                         <td>Category</td>
@@ -38,7 +38,14 @@
                     </tr>
                     <tr>
                         <td>Ratings</td>
-                        <td><input type='text' name='ratings' value="{{ $book->ratings }}"/></td>
+                        <td><select name="ratings">
+                                <option value="1" {{ $book->ratings == 1 ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ $book->ratings == 2 ? 'selected' : '' }}>2</option>
+                                <option value="3" {{ $book->ratings == 3 ? 'selected' : '' }}>3</option>
+                                <option value="4" {{ $book->ratings == 4 ? 'selected' : '' }}>4</option>
+                                <option value="5" {{ $book->ratings == 5 ? 'selected' : '' }}>5</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Price</td>
