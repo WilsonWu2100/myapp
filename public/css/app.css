@@ -1,3 +1,40 @@
+body {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
 body table {
   text-align: left;
+  border-collapse: collapse;
+}
+body table thead {
+  background: #1560bd;
+  color: white;
+}
+body table td, body table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+body .search {
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+body .button {
+  background: #1560bd;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  width: auto;
+}
+body .operation {
+  display: flex;
+}
+body .operation div {
+  padding: 0 4px;
+}
+body input[type=text] {
+  width: 400px;
 }

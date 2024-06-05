@@ -7,14 +7,14 @@
     </head>
     <body class="books_wrapper">
         <h2>Books Content Management System</h2>
-        <p><a href="/book/add">Add New Book</a></p>
+        <p><a href="/book/add"><button class="button add_new_book">Add New Book</button></a></p>
         <p>
             <form action="{{ route('books.search') }}" method="GET">
-                <input type="text" name="search" placeholder="Search books">
-                <button type="submit">Search</button>
+                <input type="text" name="search" placeholder="Search books" class="search">
+                <button type="submit" class="button">Search</button>
             </form>
         </p>
-        <table id="showBooksInfo" class="table table-bordered">
+        <table id="bookTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -45,12 +45,20 @@
                     <td>{{ $book['publisher'] }}</td>
                     <td>{{ $book['publication_date'] }}</td>
                     <td>
-                        <a href="/book/{{ $book['id'] }}/edit">Edit</a>
-                        <form action="/book/{{ $book['id'] }}/delete" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
+                        <div class="operation">
+                            <div>
+                                <a href="/book/{{ $book['id'] }}/edit">
+                                    <button class="button">Edit</button>
+                                </a>
+                            </div>
+                            <div>
+                                <form action="/book/{{ $book['id'] }}/delete" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="button">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

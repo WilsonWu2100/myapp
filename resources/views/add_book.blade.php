@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     </head>
     <body class="books_wrapper">
         <h2>Books Content Management System</h2>
@@ -61,7 +62,7 @@
                     </tr>
                     <tr>
                         <td colspan='2'>
-                            <input type='submit' value="Add Book"/>
+                            <input type='submit' class="button" value="Add Book"/>
                         </td>
                     </tr>
                 </table>
