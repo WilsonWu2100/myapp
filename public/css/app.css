@@ -13,7 +13,7 @@ body table thead {
 }
 body table td, body table th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
 }
 body table input[type=text], body table textarea {
   width: 400px;
@@ -22,6 +22,9 @@ body table input[type=text], body table textarea {
 body table select {
   width: 50px;
   padding: 4px 8px;
+}
+body table .publication_date {
+  width: 120px;
 }
 body .search {
   border-radius: 4px;

@@ -24,7 +24,7 @@ class BookController extends Controller
     {
         $book = new Book;
         $book->name = $request->input('name');
-        $book->image = $request->input('image');
+        $book->image = $request->input('image') ? $request->input('image') : '/images/no_image.jpg';
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
         $book->description = $request->input('description');
@@ -44,7 +44,7 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         $book->name = $request->input('name');
-        $book->image = $request->input('image');
+        $book->image = $request->input('image') ? $request->input('image') : '/images/no_image.jpg';
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
         $book->description = $request->input('description');

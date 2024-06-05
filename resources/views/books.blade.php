@@ -23,7 +23,7 @@
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Publisher</th>
-                    <th>Publication Date</th>
+                    <th class="publication_date">Publication Date</th>
                     <th>Operations</th>
                 </tr>
             </thead>
