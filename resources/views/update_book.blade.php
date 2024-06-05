@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                         <td>Publication Date</td>
-                        <td><input type='text' name='publication_date' value="{{ $book->publication_date }}"/></td>
+                        <td><input type='text' name='publication_date' value="{{ $book->publication_date }}" id="datepicker"/></td>
                     </tr>
                     <tr>
                         <td colspan='2'>

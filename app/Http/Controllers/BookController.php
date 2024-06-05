@@ -32,7 +32,7 @@ class BookController extends Controller
         $book->price = $request->input('price') ? $request->input('price') : 0;
         $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
-        $book->publication_date = $request->input('publication_date')  ? $request->input('publication_date') : date('Y-m-d');;
+        $book->publication_date = $request->input('publication_date')  ? date('Y-m-d', strtotime($request->input('publication_date'))) : date('Y-m-d');
         $book->created_at = now();
         $book->updated_at = now();
         $book->save();
@@ -52,7 +52,7 @@ class BookController extends Controller
         $book->price = $request->input('price') ? $request->input('price') : 0;
         $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
-        $book->publication_date = $request->input('publication_date')  ? $request->input('publication_date') : date('Y-m-d');;
+        $book->publication_date = $request->input('publication_date')  ? date('Y-m-d', strtotime($request->input('publication_date'))) : date('Y-m-d');
         $book->updated_at = now();
         $book->update();
         return redirect()->back()->with('message', 'The book has been updated successfully!');
