@@ -19,8 +19,12 @@ body table input[type=text], body table textarea {
   width: 400px;
   padding: 6px 8px;
 }
-body table select {
+body table .ratings {
   width: 50px;
+  padding: 4px 8px;
+}
+body table .category {
+  width: 150px;
   padding: 4px 8px;
 }
 body table .publication_date {

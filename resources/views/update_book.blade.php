@@ -34,11 +34,21 @@
                     </tr>
                     <tr>
                         <td>Category</td>
-                        <td><input type='text' name='category' value="{{ $book->category }}"/></td>
+                        <td>
+                            <select name="category" class="category">
+                                <option value="Language" {{ $book->category == 'Language' ? 'selected' : '' }}>Language</option>
+                                <option value="Learning" {{ $book->category == 'Learning' ? 'selected' : '' }}>Learning</option>
+                                <option value="Programming" {{ $book->category == 'Programming' ? 'selected' : '' }}>Programming</option>
+                                <option value="Science Fiction" {{ $book->category == 'Science Fiction' ? 'selected' : '' }}>Science Fiction</option>
+                                <option value="Detective Story" {{ $book->category == 'Detective Story' ? 'selected' : '' }}>Detective Story</option>
+                                <option value="Other" {{ $book->category == 'Other' ? 'selected' : '' }}>Other</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Ratings</td>
-                        <td><select name="ratings">
+                        <td>
+                            <select name="ratings" class="ratings">
                                 <option value="1" {{ $book->ratings == 1 ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ $book->ratings == 2 ? 'selected' : '' }}>2</option>
                                 <option value="3" {{ $book->ratings == 3 ? 'selected' : '' }}>3</option>

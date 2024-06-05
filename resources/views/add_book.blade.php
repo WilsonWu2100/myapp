@@ -34,12 +34,21 @@
                     </tr>
                     <tr>
                         <td>Category</td>
-                        <td><input type='text' name='category'/></td>
+                        <td>
+                            <select name="category" class="category">
+                                <option value="Language">Language</option>
+                                <option value="Learning">Learning</option>
+                                <option value="Programming">Programming</option>
+                                <option value="Science Fiction">Science Fiction</option>
+                                <option value="Detective Story">Detective Story</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Ratings</td>
                         <td>
-                            <select name="ratings">
+                            <select name="ratings" class="ratings">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
