@@ -63,7 +63,7 @@
         </table>
 
         {{-- Pagination --}}
-        <div class="pagination_wrapper">
+        <div class="d-flex justify-content-center mt-4">
             {!! $books->links() !!}
         </div>
     </div>
