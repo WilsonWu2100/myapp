@@ -16,6 +16,10 @@ body {
             border: 1px solid #ddd;
             padding: 8px;
         }
+
+        input[type="text"] {
+            width: 400px;
+        }
     }
 
     .search {
@@ -40,9 +44,5 @@ body {
         div {
             padding: 0 4px;
         }
-    }
-
-    input[type="text"] {
-        width: 400px;
     }
 }
