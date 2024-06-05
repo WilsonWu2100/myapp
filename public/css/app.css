@@ -19,6 +19,15 @@ body table input[type=text], body table textarea {
   width: 400px;
   padding: 6px 8px;
 }
+body table .book_image {
+  width: 88px;
+  height: 120px;
+}
+body table .upload_image {
+  width: 128px;
+  height: 192px;
+  margin-bottom: 8px;
+}
 body table .ratings {
   width: 50px;
   padding: 4px 8px;

@@ -20,11 +20,28 @@ class BookController extends Controller
         return view('update_book', ['book' => Book::find($id)]);
     }
 
+    /**
+     * Create a new book.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createBook(Request $request)
     {
         $book = new Book;
+
+        // Upload image and save to public/images/ folder
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $image->getClientOriginalExtension();
+            $file_name_to_store = $file_name . '_' . time() . '.' . $extension;
+            $book->image = $file_name_to_store;
+            $image->move(public_path('images'), $file_name_to_store);
+        } else {
+            $book->image = 'no_image.jpg';
+        }
+
         $book->name = $request->input('name');
-        $book->image = $request->input('image') ? $request->input('image') : '/images/no_image.jpg';
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
         $book->description = $request->input('description');
@@ -40,11 +57,29 @@ class BookController extends Controller
         return redirect()->back()->with('message', 'New book has been added successfully!');
     }
 
+    /**
+     * Update a book by id.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateBook(Request $request, $id)
     {
         $book = Book::find($id);
+
+        // Upload image and save to public/images/ folder
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $image->getClientOriginalExtension();
+            $file_name_to_store = $file_name . '_' . time() . '.' . $extension;
+            $book->image = $file_name_to_store;
+            $image->move(public_path('images'), $file_name_to_store);
+        } else {
+            $book->image = 'no_image.jpg';
+        }
+
         $book->name = $request->input('name');
-        $book->image = $request->input('image') ? $request->input('image') : '/images/no_image.jpg';
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
         $book->description = $request->input('description');
@@ -59,6 +94,11 @@ class BookController extends Controller
         return redirect()->back()->with('message', 'The book has been updated successfully!');
     }
 
+    /**
+     * Delete a book by id.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteBook($id)
     {
         $book = Book::find($id);

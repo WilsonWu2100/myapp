@@ -31,7 +31,7 @@
                 <tr>
                     <td>{{ $book['id'] }}</td>
                     <td>
-                        <img src="{{ $book['image'] }}" alt="book image" width="88px" height="120px"/>
+                        <img src="/images/{{ $book['image'] }}" class="book_image" alt="book image"/>
                     </td>
                     <td>{{ $book['name'] }}</td>
                     <td>{{ $book['isbn'] }}</td>

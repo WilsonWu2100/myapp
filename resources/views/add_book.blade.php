@@ -9,7 +9,7 @@
                     {{ session()->get('message') }}
                 </h5>
             @endif
-            <form action = "/book/add" method="post">
+            <form action="/book/add" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <table>
                     <tr>
@@ -18,7 +18,9 @@
                     </tr>
                     <tr>
                         <td>Image</td>
-                        <td><input type='text' name='image'/></td>
+                        <td>
+                            <input type='file' name='image'>
+                        </td>
                     </tr>
                     <tr>
                         <td>Isbn</td>
