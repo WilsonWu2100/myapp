@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-
     public function getAllBooks()
     {
         return view('books', [
@@ -74,7 +73,7 @@ class BookController extends Controller
             ->orWhere('author', 'like', "%$search%")
             ->orWhere('category', 'like', "%$search%")
             ->orWhere('publisher', 'like', "%$search%")
-            ->get();
+            ->paginate(10);
         return view('books', ['books' => $results]);
     }
 }

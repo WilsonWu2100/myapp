@@ -6,7 +6,7 @@
         <p><a href="/book/add"><button class="button add_new_book">Add New Book</button></a></p>
         <p>
             <form action="{{ route('books.search') }}" method="GET">
-                <input type="text" name="search" placeholder="Search books" class="search">
+                <input type="text" name="search" placeholder="Search books" class="search" value="{{!empty(app('request')->input('search')) ? app('request')->input('search') : '' }}">
                 <button type="submit" class="button">Search</button>
             </form>
         </p>

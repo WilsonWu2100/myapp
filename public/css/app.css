@@ -17,9 +17,11 @@ body table td, body table th {
 }
 body table input[type=text], body table textarea {
   width: 400px;
+  padding: 6px 8px;
 }
 body table select {
   width: 50px;
+  padding: 4px 8px;
 }
 body .search {
   border-radius: 4px;
