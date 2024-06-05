@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-    </head>
-    <body class="books_wrapper">
+@extends('layout')
+
+@section('content')
+    <div>
         <h2>Books Content Management System</h2>
         <div>
             @if(session()->has('message'))
@@ -68,5 +64,5 @@
                 </table>
             </form>
         </div>
-    </body>
-</html>
+    </div>
+@endsection
