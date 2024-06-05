@@ -1,21 +1,12 @@
 body {
     table {
-        text-align: left;
-        border-collapse: collapse;
-
         thead {
             background: #1560bd;
             color: white;
         }
 
-        td, th {
-            border: 1px solid #ddd;
+        td, th{
             padding: 10px;
-        }
-
-        input[type="text"], textarea {
-            width: 400px;
-            padding: 6px 8px;
         }
 
         .book_image {
@@ -23,65 +14,12 @@ body {
             height: 120px;
         }
 
-        .upload_image {
-            width: 128px;
-            height: 192px;
-            margin-bottom: 8px;
-        }
-
-        .ratings {
-            width: 50px;
-            padding: 4px 8px;
-        }
-
-        .category {
-            width: 150px;
-            padding: 4px 8px;
-        }
-
         .publication_date {
             width: 132px;
         }
     }
 
-    #bookTable {
-        width: 100%;
-    }
-
-    .search {
-        border-radius: 4px;
-        padding: 6px 8px;
-    }
-
-    .button {
-        background: #1560bd;
-        color: white;
-        padding: 8px 16px;
-        text-decoration: none;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
-        width: auto
-    }
-
-    .operation {
-        display: flex;
-
-        div {
-            padding: 0 4px;
-        }
-    }
-
-    .pagination {
-        display: flex;
-
-        ul li {
-            display: inline;
-            font-size: 20px;
-        }
-    }
-
-    .alert-success {
-        color: red;
+    .btn-primary {
+        background: #1560bd !important;
     }
 }

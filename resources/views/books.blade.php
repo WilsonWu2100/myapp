@@ -2,58 +2,63 @@
 
 @section('content')
     <div>
-        <h2>Books Content Management System</h2>
-        <p><a href="/book/add"><button class="button add_new_book">Add New Book</button></a></p>
-        <p>
-            <form action="{{ route('books.search') }}" method="GET">
-                <input type="text" name="search" placeholder="Search books" class="search" value="{{!empty(app('request')->input('search')) ? app('request')->input('search') : '' }}">
-                <button type="submit" class="button">Search</button>
-            </form>
-        </p>
-        <table id="bookTable">
+        <h2 class="fw-bold">Books Content Management System</h2>
+        <div class="mt-4 mb-3">
+            <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
+        </div>
+        <form action="{{ route('books.search') }}" method="GET" class="row g-2 mb-2">
+            <div class="col-auto">
+            <input type="text" name="search" placeholder="Search books" class="form-control" value="{{!empty(app('request')->input('search')) ? app('request')->input('search') : '' }}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <table id="bookTable" class="w-100">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Book Name</th>
-                    <th>ISBN</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Ratings</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Publisher</th>
-                    <th class="publication_date">Publication Date</th>
-                    <th>Operations</th>
+                    <th class="border">ID</th>
+                    <th class="border">Image</th>
+                    <th class="border">Book Name</th>
+                    <th class="border">ISBN</th>
+                    <th class="border">Author</th>
+                    <th class="border">Category</th>
+                    <th class="border">Ratings</th>
+                    <th class="border">Price</th>
+                    <th class="border">Stock</th>
+                    <th class="border">Publisher</th>
+                    <th class="border publication_date">Publication Date</th>
+                    <th class="border">Operations</th>
                 </tr>
             </thead>
             @foreach($books as $book)
                 <tr>
-                    <td>{{ $book['id'] }}</td>
-                    <td>
+                    <td class="border">{{ $book['id'] }}</td>
+                    <td class="border">
                         <img src="/images/{{ $book['image'] }}" class="book_image" alt="book image"/>
                     </td>
-                    <td>{{ $book['name'] }}</td>
-                    <td>{{ $book['isbn'] }}</td>
-                    <td>{{ $book['author'] }}</td>
-                    <td>{{ $book['category'] }}</td>
-                    <td>{{ $book['ratings'] }}</td>
-                    <td>{{ $book['price'] }}</td>
-                    <td>{{ $book['stock'] }}</td>
-                    <td>{{ $book['publisher'] }}</td>
-                    <td>{{ $book['publication_date'] }}</td>
-                    <td>
-                        <div class="operation">
-                            <div>
+                    <td class="border">{{ $book['name'] }}</td>
+                    <td class="border">{{ $book['isbn'] }}</td>
+                    <td class="border">{{ $book['author'] }}</td>
+                    <td class="border">{{ $book['category'] }}</td>
+                    <td class="border">{{ $book['ratings'] }}</td>
+                    <td class="border">{{ $book['price'] }}</td>
+                    <td class="border">{{ $book['stock'] }}</td>
+                    <td class="border">{{ $book['publisher'] }}</td>
+                    <td class="border">{{ $book['publication_date'] }}</td>
+                    <td class="border">
+                        <div class="d-flex">
+                            <div class="p-1">
                                 <a href="/book/{{ $book['id'] }}/edit">
-                                    <button class="button">Edit</button>
+                                    <button class="btn btn-primary">Edit</button>
                                 </a>
                             </div>
-                            <div>
+                            <div class="p-1">
                                 <form action="/book/{{ $book['id'] }}/delete" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="button">Delete</button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
                                 </form>
                             </div>
                         </div>

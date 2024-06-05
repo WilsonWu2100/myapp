@@ -11966,72 +11966,20 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-body table {
-  text-align: left;
-  border-collapse: collapse;
-}
 body table thead {
   background: #1560bd;
   color: white;
 }
 body table td, body table th {
-  border: 1px solid #ddd;
   padding: 10px;
-}
-body table input[type=text], body table textarea {
-  width: 400px;
-  padding: 6px 8px;
 }
 body table .book_image {
   width: 88px;
   height: 120px;
 }
-body table .upload_image {
-  width: 128px;
-  height: 192px;
-  margin-bottom: 8px;
-}
-body table .ratings {
-  width: 50px;
-  padding: 4px 8px;
-}
-body table .category {
-  width: 150px;
-  padding: 4px 8px;
-}
 body table .publication_date {
   width: 132px;
 }
-body #bookTable {
-  width: 100%;
-}
-body .search {
-  border-radius: 4px;
-  padding: 6px 8px;
-}
-body .button {
-  background: #1560bd;
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  width: auto;
-}
-body .operation {
-  display: flex;
-}
-body .operation div {
-  padding: 0 4px;
-}
-body .pagination {
-  display: flex;
-}
-body .pagination ul li {
-  display: inline;
-  font-size: 20px;
-}
-body .alert-success {
-  color: red;
+body .btn-primary {
+  background: #1560bd !important;
 }

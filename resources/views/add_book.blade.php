@@ -13,31 +13,31 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <table>
                     <tr>
-                        <td>Name</td>
-                        <td><input type='text' name='name'/></td>
+                        <td class="border">Name</td>
+                        <td class="border"><input type='text' name='name' class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td>Image</td>
-                        <td>
-                            <input type='file' name='image'>
+                        <td class="border">Image</td>
+                        <td class="border">
+                            <input type='file' name='image' class="form-control">
                         </td>
                     </tr>
                     <tr>
-                        <td>Isbn</td>
-                        <td><input type='text' name='isbn'/></td>
+                        <td class="border">Isbn</td>
+                        <td class="border"><input type='text' name='isbn' class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td>Author</td>
-                        <td><input type='text' name='author'/></td>
+                        <td class="border">Author</td>
+                        <td class="border"><input type='text' name='author' class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td>Description</td>
-                        <td><textarea name='description' rows="5" cols="50"></textarea></td>
+                        <td class="border">Description</td>
+                        <td class="border"><textarea name='description' rows="5" cols="50" class="form-control"></textarea></td>
                     </tr>
                     <tr>
-                        <td>Category</td>
-                        <td>
-                            <select name="category" class="category">
+                        <td class="border">Category</td>
+                        <td class="border">
+                            <select name="category" class="form-select">
                                 <option value="Language">Language</option>
                                 <option value="Learning">Learning</option>
                                 <option value="Programming">Programming</option>
@@ -48,9 +48,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Ratings</td>
-                        <td>
-                            <select name="ratings" class="ratings">
+                        <td class="border">Ratings</td>
+                        <td class="border">
+                            <select name="ratings" class="form-select">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -60,24 +60,24 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Price</td>
-                        <td><input type='text' name='price'/></td>
+                        <td class="border">Price</td>
+                        <td class="border"><input type='text' name='price' class="form-control"/></td>
                     </tr>
-                    <tr>
+                    <tr class="border">
                         <td>Stock</td>
-                        <td><input type='text' name='stock'/></td>
+                        <td><input type='text' name='stock' class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td>Publisher</td>
-                        <td><input type='text' name='publisher'/></td>
+                        <td class="border">Publisher</td>
+                        <td class="border"><input type='text' name='publisher' class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td>Publication Date</td>
-                        <td><input type='text' name='publication_date' id="datepicker"/></td>
+                        <td class="border">Publication Date</td>
+                        <td class="border"><input type='text' name='publication_date' id="datepicker" class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>
-                            <input type='submit' class="button" value="Add Book"/>
+                        <td class="border" colspan='2'>
+                            <input type='submit' class="btn btn-primary" value="Add Book"/>
                         </td>
                     </tr>
                 </table>
