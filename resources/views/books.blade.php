@@ -2,21 +2,12 @@
 
 @section('content')
     <div>
-        <h2 class="fw-bold">Books Content Management System</h2>
-        <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-                <span class="navbar-brand">
-                    <a href="/books">Home</a>
-                </span>
-            </div>
-        </nav>
-
         @if(session()->has('message'))
             <h5 class="alert alert-success">
                 {{ session()->get('message') }}
             </h5>
         @endif
-        
+
         <div class="row justify-content-between mt-4">
             <div class="col-4">
                 <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>

@@ -11,6 +11,14 @@
     </head>
     <body>
         <div class="container">
+            <h2>Books Content Management System</h2>
+            <nav class="navbar bg-body-tertiary">
+                <div class="container-fluid">
+                <span class="navbar-brand">
+                    <a href="/books">Home</a>
+                </span>
+                </div>
+            </nav>
             @yield('content')
         </div>
     </body>
