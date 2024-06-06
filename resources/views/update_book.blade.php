@@ -3,6 +3,13 @@
 @section('content')
     <div>
         <h2>Books Content Management System</h2>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <a href="/books">Home</a>
+                </span>
+            </div>
+        </nav>
         <div>
             @if(session()->has('message'))
                 <h5 class="alert alert-success">

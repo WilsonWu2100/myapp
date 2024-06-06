@@ -3,19 +3,37 @@
 @section('content')
     <div>
         <h2 class="fw-bold">Books Content Management System</h2>
-        <div class="mt-4 mb-3">
-            <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
-        </div>
-        <form action="{{ route('books.search') }}" method="GET" class="row g-2 mb-2">
-            <div class="col-auto">
-            <input type="text" name="search" placeholder="Search books" class="form-control" value="{{!empty(app('request')->input('search')) ? app('request')->input('search') : '' }}">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <a href="/books">Home</a>
+                </span>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-        </form>
+        </nav>
 
-        <table id="bookTable" class="w-100">
+        @if(session()->has('message'))
+            <h5 class="alert alert-success">
+                {{ session()->get('message') }}
+            </h5>
+        @endif
+        
+        <div class="row justify-content-between mt-4">
+            <div class="col-4">
+                <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
+            </div>
+            <div class="col-4 text-end">
+                <form action="{{ route('books.search') }}" method="GET" class="row g-2 mb-2 float-end">
+                    <div class="col-auto">
+                        <input type="text" name="search" placeholder="Search books" class="form-control" value="{{!empty(app('request')->input('search')) ? app('request')->input('search') : '' }}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table id="bookTable" class="w-100 mt-2">
             <thead>
                 <tr>
                     <th class="border">ID</th>
