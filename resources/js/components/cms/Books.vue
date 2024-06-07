@@ -70,13 +70,28 @@
             </tr>
         </table>
 
-
+        <div class="overflow-auto d-flex justify-content-center mt-4">
+            <b-pagination-nav :link-gen="linkGen" :number-of-pages="getPageNum" use-router></b-pagination-nav>
+        </div>
     </div>
 </template>
 
 <script>
-
+    import { BPaginationNav } from 'bootstrap-vue';
     export default {
-        props: ['searchRoute', 'message', 'search', 'books', 'pagination']
+        props: ['searchRoute', 'message', 'search', 'books'],
+        components: {
+            BPaginationNav
+        },
+        methods: {
+            linkGen(pageNum) {
+                return pageNum === 1 ? '?' : `?page=${pageNum}`
+            }
+        },
+        computed: {
+            getPageNum() {
+                return Math.floor(this.books.total / 10 + 1);
+            }
+        }
     }
 </script>

@@ -175,6 +175,22 @@ class BookSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 11,
+                'name' => 'C# and Algorithmic Thinking for the Complete Beginner',
+                'isbn' => '979-8865989462',
+                'author' => 'Aristides Bouras',
+                'description' => "Completely updated for the latest version of C#, this book offers a comprehensive introduction to programming, assuming no prior knowledge of the subject. It is designed for individuals, eager to learn C# from scratch, providing a strong foundation in Algorithmic Thinking—the fundamental skill every aspiring programmer must acquire. Algorithmic Thinking encompasses more than just writing code; it entails mastering the art of problem-solving through coding.",
+                'category' => 'Programming',
+                'ratings' => '5',
+                'price' => 83.18,
+                'stock' => 1500,
+                'image' => 'C_sharp_and_algorithmic_thinking.jpg',
+                'publisher' => 'Independently published',
+                'publication_date' => "2024-05-14",
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         DB::table('books')->insert($books);
