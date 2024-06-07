@@ -11,7 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['searchRoute', 'message', 'search', 'books', 'pagination']
+});
 
 /***/ }),
 
@@ -29,12 +31,142 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
+  return _c("div", [_vm.message ? _c("div", [_c("h5", {
+    staticClass: "alert alert-success"
+  }, [_vm._v("\n            " + _vm._s(_vm.message) + "\n        ")])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "row justify-content-between mt-4"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "col-4 text-end"
+  }, [_c("form", {
+    staticClass: "row g-2 mb-2 float-end",
+    attrs: {
+      action: _vm.searchRoute,
+      method: "GET"
+    }
+  }, [_c("div", {
+    staticClass: "col-auto"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "search",
+      placeholder: "Search books"
+    },
+    domProps: {
+      value: _vm.search
+    }
+  })]), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _c("table", {
+    staticClass: "w-100 mt-2",
+    attrs: {
+      id: "bookTable"
+    }
+  }, [_vm._m(2), _vm._v(" "), _vm._l(_vm.books.data, function (book, index) {
+    return _c("tr", [_c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.id))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_c("img", {
+      staticClass: "book_image",
+      attrs: {
+        src: "/images/".concat(book.image),
+        alt: "book image"
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.name))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.isbn))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.author))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.category))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.ratings))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.price))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.stock))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.publisher))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_vm._v(_vm._s(book.publication_date))]), _vm._v(" "), _c("td", {
+      staticClass: "border"
+    }, [_c("div", {
+      staticClass: "d-flex"
+    }, [_c("div", {
+      staticClass: "p-1"
+    }, [_c("a", {
+      attrs: {
+        href: "/book/".concat(book.id, "/edit")
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-primary"
+    }, [_vm._v("Edit")])])]), _vm._v(" "), _c("div", {
+      staticClass: "p-1"
+    }, [_c("form", {
+      attrs: {
+        action: "/book/".concat(book.id, "/delete"),
+        method: "post"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        type: "submit"
+      }
+    }, [_vm._v("Delete")])])])])])]);
+  })], 2)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("span", [_vm._v("My Test")])]);
+  return _c("div", {
+    staticClass: "col-4"
+  }, [_c("a", {
+    attrs: {
+      href: "/book/add"
+    }
+  }, [_c("button", {
+    staticClass: "btn btn-primary"
+  }, [_vm._v("Add New Book")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-auto"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Search")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", {
+    staticClass: "border"
+  }, [_vm._v("ID")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Book Name")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Author")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Ratings")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Price")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Publisher")]), _vm._v(" "), _c("th", {
+    staticClass: "border publication_date"
+  }, [_vm._v("Publication Date")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Operations")])])]);
 }];
 render._withStripped = true;
 

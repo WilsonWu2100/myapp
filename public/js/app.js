@@ -5161,6 +5161,12 @@ var app = new Vue({
   components: {
     'books': function books() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_cms_Books_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/cms/Books.vue */ "./resources/js/components/cms/Books.vue"));
+    },
+    'addBook': function addBook() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_cms_AddBook_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/cms/AddBook.vue */ "./resources/js/components/cms/AddBook.vue"));
+    },
+    'updateBook': function updateBook() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_cms_UpdateBook_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/cms/UpdateBook.vue */ "./resources/js/components/cms/UpdateBook.vue"));
     }
   }
 });
@@ -39352,7 +39358,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "resources_js_components_cms_Books_vue") return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_cms_Books_vue":1,"resources_js_components_cms_AddBook_vue":1,"resources_js_components_cms_UpdateBook_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
