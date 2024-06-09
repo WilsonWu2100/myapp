@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
@@ -23,7 +24,7 @@ class BookController extends Controller
     /**
      * Create a new book.
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createBook(Request $request)
     {
@@ -54,7 +55,8 @@ class BookController extends Controller
         $book->created_at = now();
         $book->updated_at = now();
         $book->save();
-        return redirect()->back()->with('message', 'New book has been added successfully!');
+        $message = ['message' => 'New book has been added successfully!'];
+        return response()->json($message);
     }
 
     /**
@@ -97,13 +99,15 @@ class BookController extends Controller
     /**
      * Delete a book by id.
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deleteBook($id)
     {
+        dd($id);
         $book = Book::find($id);
         $book->delete();
-        return redirect()->back()->with('message','The book has been deleted successfully!');
+        $message = ['message' => 'The book has been deleted successfully!'];
+        return response()->json($message);
     }
 
     public function searchBook(Request $request)

@@ -11,16 +11,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/components/pagination-nav/pagination-nav.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/components/pagination-nav/pagination-nav.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['searchRoute', 'message', 'search', 'books'],
+  props: ['searchRoute', 'search', 'books'],
   components: {
-    BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__.BPaginationNav
+    BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__.BPaginationNav
+  },
+  data: function data() {
+    return {
+      message: '',
+      formData: {
+        hiddenField: '' // Set the initial value of the hidden field
+      }
+    };
   },
   methods: {
     linkGen: function linkGen(pageNum) {
       return pageNum === 1 ? '?' : "?page=".concat(pageNum);
+    },
+    deleteBook: function deleteBook() {
+      var _this = this;
+      /* var id = this.formData;
+       console.log(id);return;
+       axios.delete('/book/34/delete', {
+           id: '34'
+       })*/
+      console.log(this.book);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/books', this.formData).then(function (response) {
+        // Handle response if needed
+        window.reload();
+        _this.message = response.data['message'];
+      })["catch"](function (error) {
+        // Handle error if needed
+      });
     }
   },
   computed: {
@@ -120,10 +147,35 @@ var render = function render() {
       staticClass: "p-1"
     }, [_c("form", {
       attrs: {
-        action: "/book/".concat(book.id, "/delete"),
         method: "post"
+      },
+      on: {
+        submit: function submit($event) {
+          $event.preventDefault();
+          return _vm.deleteBook.apply(null, arguments);
+        }
       }
-    }, [_c("button", {
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.formData.hiddenField,
+        expression: "formData.hiddenField"
+      }],
+      attrs: {
+        type: "hidden",
+        name: "id"
+      },
+      domProps: {
+        value: _vm.formData.hiddenField
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(_vm.formData, "hiddenField", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _c("button", {
       staticClass: "btn btn-primary",
       attrs: {
         type: "submit"

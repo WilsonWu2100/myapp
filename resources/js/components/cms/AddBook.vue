@@ -6,11 +6,11 @@
             </h5>
         </div>
 
-        <form action="/book/add" method="post" enctype="multipart/form-data">
+        <form @submit.prevent="addBook" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td class="border">Name</td>
-                    <td class="border"><input type='text' name='name' class="form-control"/></td>
+                    <td class="border"><input type='text' name='name' class="form-control" v-model="formData.name"/></td>
                 </tr>
                 <tr>
                     <td class="border">Image</td>
@@ -20,20 +20,20 @@
                 </tr>
                 <tr>
                     <td class="border">Isbn</td>
-                    <td class="border"><input type='text' name='isbn' class="form-control"/></td>
+                    <td class="border"><input type='text' name='isbn' class="form-control" v-model="formData.isbn"/></td>
                 </tr>
                 <tr>
                     <td class="border">Author</td>
-                    <td class="border"><input type='text' name='author' class="form-control"/></td>
+                    <td class="border"><input type='text' name='author' class="form-control" v-model="formData.author"/></td>
                 </tr>
                 <tr>
                     <td class="border">Description</td>
-                    <td class="border"><textarea name='description' rows="5" cols="50" class="form-control"></textarea></td>
+                    <td class="border"><textarea name='description' rows="5" cols="50" class="form-control" v-model="formData.description"></textarea></td>
                 </tr>
                 <tr>
                     <td class="border">Category</td>
                     <td class="border">
-                        <select name="category" class="form-select">
+                        <select name="category" class="form-select" v-model="formData.category">
                             <option value="Language">Language</option>
                             <option value="Learning">Learning</option>
                             <option value="Programming">Programming</option>
@@ -46,7 +46,7 @@
                 <tr>
                     <td class="border">Ratings</td>
                     <td class="border">
-                        <select name="ratings" class="form-select">
+                        <select name="ratings" class="form-select" v-model="formData.ratings">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -57,23 +57,23 @@
                 </tr>
                 <tr>
                     <td class="border">Price</td>
-                    <td class="border"><input type='text' name='price' class="form-control"/></td>
+                    <td class="border"><input type='text' name='price' class="form-control" v-model="formData.price"/></td>
                 </tr>
                 <tr class="border">
                     <td class="border">Stock</td>
-                    <td><input type='text' name='stock' class="form-control"/></td>
+                    <td><input type='text' name='stock' class="form-control" v-model="formData.stock"/></td>
                 </tr>
                 <tr>
                     <td class="border">Publisher</td>
-                    <td class="border"><input type='text' name='publisher' class="form-control"/></td>
+                    <td class="border"><input type='text' name='publisher' class="form-control" v-model="formData.publisher"/></td>
                 </tr>
                 <tr>
                     <td class="border">Publication Date</td>
-                    <td class="border"><input type='text' name='publication_date' id="datepicker" class="form-control"/></td>
+                    <td class="border"><input type='text' name='publication_date' id="datepicker" class="form-control" v-model="formData.publication_date"/></td>
                 </tr>
                 <tr>
                     <td class="border" colspan='2'>
-                        <input type='submit' class="btn btn-primary" value="Add Book"/>
+                        <input type='submit' class="btn btn-primary" value="Add Book" />
                     </td>
                 </tr>
             </table>
@@ -82,7 +82,39 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
-        props: ['message']
+        data() {
+            return {
+                formData: {
+                    name: '',
+                    image: '',
+                    isbn: '',
+                    author: '',
+                    description: '',
+                    category: '',
+                    ratings: '',
+                    price: '',
+                    stock: '',
+                    publisher: '',
+                    publication_date: ''
+                },
+                message: ''
+            };
+        },
+
+        methods: {
+            addBook() {
+                axios.post('/book/add', this.formData)
+                .then(response => {
+                    // Handle response if needed
+                    this.message = response.data['message'];
+                })
+                .catch(error => {
+                    // Handle error if needed
+                });
+            }
+        },
     }
 </script>
