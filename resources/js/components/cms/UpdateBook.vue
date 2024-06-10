@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <td class="border">Publication Date</td>
-                    <td class="border"><input type='text' name='publication_date' :value="book.publication_date" id="datepicker" class="form-control"/></td>
+                    <td class="border"><date-picker type='text' name='publication_date' input-class="form-control" :value="book.publication_date" id="datepicker"></date-picker></td>
                 </tr>
                 <tr>
                     <td class="border" colspan='2'>
@@ -83,7 +83,11 @@
 </template>
 
 <script>
+    import DatePicker from 'vuejs-datepicker';
+
     export default {
+        components: { DatePicker },
+
         props: ['message', 'book']
     }
 </script>

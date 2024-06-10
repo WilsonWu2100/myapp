@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <td class="border">Publication Date</td>
-                    <td class="border"><input type='text' name='publication_date' id="datepicker" class="form-control" v-model="formData.publication_date"/></td>
+                    <td class="border"><date-picker name='publication_date' id="datepicker" input-class="form-control" v-model="formData.publication_date"></date-picker></td>
                 </tr>
                 <tr>
                     <td class="border" colspan='2'>
@@ -83,8 +83,11 @@
 
 <script>
     import axios from 'axios';
+    import DatePicker from 'vuejs-datepicker';
 
     export default {
+        components: { DatePicker },
+
         data() {
             return {
                 formData: {

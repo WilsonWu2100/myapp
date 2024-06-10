@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +44,12 @@ class BookController extends Controller
             $book->image = 'no_image.jpg';
         }
 
+        $utcDateTime = $request->input('publication_date');
+        $dateTime = new DateTime($utcDateTime);
+        $timezone = new DateTimeZone('Australia/Sydney');
+        $dateTime->setTimezone($timezone);
+        $book->publication_date = $request->input('publication_date')  ? $dateTime->format('Y-m-d') : '';
+
         $book->name = $request->input('name');
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
@@ -51,7 +59,6 @@ class BookController extends Controller
         $book->price = $request->input('price') ? $request->input('price') : 0;
         $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
-        $book->publication_date = $request->input('publication_date')  ? date('Y-m-d', strtotime($request->input('publication_date'))) : date('Y-m-d');
         $book->created_at = now();
         $book->updated_at = now();
         $book->save();
@@ -81,6 +88,12 @@ class BookController extends Controller
             $book->image = 'no_image.jpg';
         }
 
+        $utcDateTime = $request->input('publication_date');
+        $dateTime = new DateTime($utcDateTime);
+        $timezone = new DateTimeZone('Australia/Sydney');
+        $dateTime->setTimezone($timezone);
+        $book->publication_date = $request->input('publication_date')  ? $dateTime->format('Y-m-d') : '';
+
         $book->name = $request->input('name');
         $book->isbn = $request->input('isbn');
         $book->author = $request->input('author');
@@ -90,7 +103,6 @@ class BookController extends Controller
         $book->price = $request->input('price') ? $request->input('price') : 0;
         $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
-        $book->publication_date = $request->input('publication_date')  ? date('Y-m-d', strtotime($request->input('publication_date'))) : date('Y-m-d');
         $book->updated_at = now();
         $book->update();
         return redirect()->back()->with('message', 'The book has been updated successfully!');
