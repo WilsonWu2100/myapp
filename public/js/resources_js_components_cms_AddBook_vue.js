@@ -22,6 +22,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      imageFile: null,
+      // Store the selected file
       formData: {
         name: '',
         image: '',
@@ -41,12 +43,27 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addBook: function addBook() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/book/add', this.formData).then(function (response) {
+      var formData = new FormData();
+
+      // Append all form data to formData
+      for (var key in this.formData) {
+        if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+          formData.append(key, this.formData[key]);
+        }
+      }
+
+      // Append the image file
+      formData.append('image', this.imageFile);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/book/add', formData).then(function (response) {
         // Handle response if needed
         _this.message = response.data['message'];
       })["catch"](function (error) {
         // Handle error if needed
       });
+    },
+    // Get the uploaded file.
+    handleFileUpload: function handleFileUpload(event) {
+      this.imageFile = event.target.files[0];
     }
   }
 });
@@ -105,7 +122,20 @@ var render = function render() {
         _vm.$set(_vm.formData, "name", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("tr", [_c("td", {
+  })])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticClass: "border"
+  }, [_vm._v("Image")]), _vm._v(" "), _c("td", {
+    staticClass: "border"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      name: "image"
+    },
+    on: {
+      change: _vm.handleFileUpload
+    }
+  })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Isbn")]), _vm._v(" "), _c("td", {
     staticClass: "border"
@@ -369,23 +399,9 @@ var render = function render() {
       },
       expression: "formData.publication_date"
     }
-  })], 1)]), _vm._v(" "), _vm._m(1)])])]);
+  })], 1)]), _vm._v(" "), _vm._m(0)])])]);
 };
 var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("tr", [_c("td", {
-    staticClass: "border"
-  }, [_vm._v("Image")]), _vm._v(" "), _c("td", {
-    staticClass: "border"
-  }, [_c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "file",
-      name: "image"
-    }
-  })])]);
-}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("tr", [_c("td", {

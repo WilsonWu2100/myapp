@@ -44,10 +44,10 @@ class BookController extends Controller
             $book->image = 'no_image.jpg';
         }
 
-        $utcDateTime = $request->input('publication_date');
-        $dateTime = new DateTime($utcDateTime);
-        $timezone = new DateTimeZone('Australia/Sydney');
-        $dateTime->setTimezone($timezone);
+        // Format the publication date.
+        $dateTime = $request->input('publication_date');
+        $dateString = rtrim(preg_replace('/\(.*\)/', '', $dateTime));
+        $dateTime = DateTime::createFromFormat('D M d Y H:i:s e', $dateString);
         $book->publication_date = $request->input('publication_date')  ? $dateTime->format('Y-m-d') : '';
 
         $book->name = $request->input('name');

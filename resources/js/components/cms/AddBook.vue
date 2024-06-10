@@ -15,7 +15,7 @@
                 <tr>
                     <td class="border">Image</td>
                     <td class="border">
-                        <input type='file' name='image' class="form-control">
+                        <input type='file' name='image' class="form-control" @change="handleFileUpload">
                     </td>
                 </tr>
                 <tr>
@@ -90,6 +90,7 @@
 
         data() {
             return {
+                imageFile: null, // Store the selected file
                 formData: {
                     name: '',
                     image: '',
@@ -109,7 +110,19 @@
 
         methods: {
             addBook() {
-                axios.post('/book/add', this.formData)
+                const formData = new FormData();
+
+                // Append all form data to formData.
+                for (const key in this.formData) {
+                    if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+                        formData.append(key, this.formData[key]);
+                    }
+                }
+
+                // Append the image file.
+                formData.append('image', this.imageFile);
+
+                axios.post('/book/add', formData)
                 .then(response => {
                     // Handle response if needed
                     this.message = response.data['message'];
@@ -117,7 +130,12 @@
                 .catch(error => {
                     // Handle error if needed
                 });
-            }
+            },
+
+            // Get the uploaded file.
+            handleFileUpload(event) {
+                this.imageFile = event.target.files[0];
+            },
         },
     }
 </script>
