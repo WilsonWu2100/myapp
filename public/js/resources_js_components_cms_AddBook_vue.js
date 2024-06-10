@@ -45,14 +45,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       var formData = new FormData();
 
-      // Append all form data to formData
+      // Append all form data to formData.
       for (var key in this.formData) {
         if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
           formData.append(key, this.formData[key]);
         }
       }
 
-      // Append the image file
+      // Append the image file.
       formData.append('image', this.imageFile);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/book/add', formData).then(function (response) {
         // Handle response if needed

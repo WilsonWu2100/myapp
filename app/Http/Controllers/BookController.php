@@ -115,7 +115,6 @@ class BookController extends Controller
      */
     public function deleteBook($id)
     {
-        dd($id);
         $book = Book::find($id);
         $book->delete();
         $message = ['message' => 'The book has been deleted successfully!'];

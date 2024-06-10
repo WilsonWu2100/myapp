@@ -61,9 +61,7 @@
                             </a>
                         </div>
                         <div class="p-1">
-                            <form :action="`/book/${book.id}/delete`" method="post">
-                                <button type="submit" class="btn btn-primary">Delete</button>
-                            </form>
+                            <button @click="confirmDelete(book.id)" class="btn btn-primary">Delete</button>
                         </div>
                     </div>
                 </td>
@@ -77,17 +75,48 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import { BPaginationNav } from 'bootstrap-vue';
+
     export default {
-        props: ['searchRoute', 'message', 'search', 'books'],
+        props: ['searchRoute', 'search', 'books'],
+
         components: {
             BPaginationNav
         },
+
+        data() {
+            return {
+                message: ''
+            };
+        },
+
         methods: {
             linkGen(pageNum) {
                 return pageNum === 1 ? '?' : `?page=${pageNum}`
+            },
+
+            // Ask the user to confirm the deletion, if the user confirms, proceed with the deletion.
+            confirmDelete(id) {
+                if (window.confirm('Are you sure you want to delete this record?')) {
+                    this.deleteRecord(id);
+                }
+            },
+
+            deleteRecord(id) {
+                // Make an HTTP DELETE request to delete the record with the given ID
+                axios.delete(`/book/${id}/delete`)
+                .then((response) => {
+                    // Remove the deleted record from the local array
+                    this.message = response.data['message'];
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error deleting record:', error);
+                });
             }
         },
+
         computed: {
             getPageNum() {
                 return Math.floor(this.books.total / 10 + 1);

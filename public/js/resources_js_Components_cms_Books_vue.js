@@ -11,16 +11,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/components/pagination-nav/pagination-nav.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/components/pagination-nav/pagination-nav.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['searchRoute', 'message', 'search', 'books'],
+  props: ['searchRoute', 'search', 'books'],
   components: {
-    BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__.BPaginationNav
+    BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__.BPaginationNav
+  },
+  data: function data() {
+    return {
+      message: ''
+    };
   },
   methods: {
     linkGen: function linkGen(pageNum) {
       return pageNum === 1 ? '?' : "?page=".concat(pageNum);
+    },
+    // Ask the user to confirm the deletion, if the user confirms, proceed with the deletion.
+    confirmDelete: function confirmDelete(id) {
+      if (window.confirm('Are you sure you want to delete this record?')) {
+        this.deleteRecord(id);
+      }
+    },
+    deleteRecord: function deleteRecord(id) {
+      var _this = this;
+      // Make an HTTP DELETE request to delete the record with the given ID
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/book/".concat(id, "/delete")).then(function (response) {
+        // Remove the deleted record from the local array
+        _this.message = response.data['message'];
+        window.location.reload();
+      })["catch"](function (error) {
+        console.error('Error deleting record:', error);
+      });
     }
   },
   computed: {
@@ -118,17 +143,14 @@ var render = function render() {
       staticClass: "btn btn-primary"
     }, [_vm._v("Edit")])])]), _vm._v(" "), _c("div", {
       staticClass: "p-1"
-    }, [_c("form", {
-      attrs: {
-        action: "/book/".concat(book.id, "/delete"),
-        method: "post"
-      }
     }, [_c("button", {
       staticClass: "btn btn-primary",
-      attrs: {
-        type: "submit"
+      on: {
+        click: function click($event) {
+          return _vm.confirmDelete(book.id);
+        }
       }
-    }, [_vm._v("Delete")])])])])])]);
+    }, [_vm._v("Delete")])])])])]);
   })], 2), _vm._v(" "), _c("div", {
     staticClass: "overflow-auto d-flex justify-content-center mt-4"
   }, [_c("b-pagination-nav", {
