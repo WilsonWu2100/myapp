@@ -84,8 +84,6 @@ class BookController extends Controller
             $file_name_to_store = $file_name . '_' . time() . '.' . $extension;
             $book->image = $file_name_to_store;
             $image->move(public_path('images'), $file_name_to_store);
-        } else {
-            $book->image = 'no_image.jpg';
         }
 
         $utcDateTime = $request->input('publication_date');
