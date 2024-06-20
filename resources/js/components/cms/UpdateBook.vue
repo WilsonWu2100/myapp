@@ -15,7 +15,7 @@
                 <tr>
                     <td class="border">Image</td>
                     <td class="border">
-                        <div><img :src="imageUrl" class="mb-2" name="image" width="auto" height="192" alt="book image"/></div>
+                        <div><img :src="imageUrl" class="mb-2" width="auto" height="192" alt="book image"/></div>
                         <div><input type='file' name='image' class="form-control" @change="handleFileUpload"></div>
                     </td>
                 </tr>

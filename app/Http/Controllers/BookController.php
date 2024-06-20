@@ -69,7 +69,6 @@ class BookController extends Controller
         $book->save();
         $message = ['message' => 'New book has been added successfully!'];
         return response()->json($message);
-       // return redirect()->route('books')->with('message', 'New content added successfully!');
     }
 
     /**
