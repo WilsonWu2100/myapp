@@ -142,7 +142,6 @@ var render = function render() {
     staticClass: "mb-2",
     attrs: {
       src: _vm.imageUrl,
-      name: "image",
       width: "auto",
       height: "192",
       alt: "book image"
