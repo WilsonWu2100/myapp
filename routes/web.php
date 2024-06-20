@@ -33,6 +33,7 @@ Route::post('/book/add', [BookController::class, 'createBook']);
 
 // Update a book.
 Route::get('/book/{id}/edit', [BookController::class, 'showBook']);
+Route::get('/api/book/{id}/edit', [BookController::class, 'getBook']);
 Route::post('/book/{id}/edit', [BookController::class, 'updateBook']);
 
 // Delete a book.

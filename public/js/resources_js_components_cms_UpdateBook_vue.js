@@ -17,7 +17,51 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     DatePicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['message', 'book']
+  data: function data() {
+    return {
+      formData: {
+        id: '',
+        name: '',
+        image: '',
+        isbn: '',
+        author: '',
+        description: '',
+        category: '',
+        ratings: '',
+        price: '',
+        stock: '',
+        publisher: '',
+        publication_date: ''
+      },
+      imageUrl: '',
+      message: ''
+    };
+  },
+  mounted: function mounted() {
+    this.fetchBook();
+  },
+  methods: {
+    // Fetch book details.
+    fetchBook: function fetchBook() {
+      var _this = this;
+      axios.get('/api' + window.location.pathname).then(function (response) {
+        console.log(response.data);
+        _this.formData = response.data;
+        _this.imageUrl = '/images/' + response.data['image'];
+      })["catch"](function (error) {
+        console.error('Error fetching data:', error);
+      });
+    },
+    //Update book.
+    updateBook: function updateBook() {
+      var _this2 = this;
+      axios.post(window.location.href, this.formData).then(function (response) {
+        _this2.message = response.data['message'];
+      })["catch"](function (error) {
+        console.error('Error saving data:', error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -40,22 +84,38 @@ var render = function render() {
     staticClass: "alert alert-success"
   }, [_vm._v("\n            " + _vm._s(_vm.message) + "\n        ")])]) : _vm._e(), _vm._v(" "), _c("form", {
     attrs: {
-      action: "/book/".concat(_vm.book.id, "/edit"),
-      method: "post",
       enctype: "multipart/form-data"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.updateBook.apply(null, arguments);
+      }
     }
   }, [_c("table", [_c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Name")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.name,
+      expression: "formData.name"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "name"
     },
     domProps: {
-      value: _vm.book.name
+      value: _vm.formData.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "name", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
@@ -64,7 +124,7 @@ var render = function render() {
   }, [_c("div", [_c("img", {
     staticClass: "mb-2",
     attrs: {
-      src: "/images/".concat(_vm.book.image),
+      src: _vm.imageUrl,
       name: "image",
       width: "auto",
       height: "192",
@@ -75,171 +135,247 @@ var render = function render() {
   }, [_vm._v("Isbn")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.isbn,
+      expression: "formData.isbn"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "isbn"
     },
     domProps: {
-      value: _vm.book.isbn
+      value: _vm.formData.isbn
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "isbn", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Author")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.author,
+      expression: "formData.author"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "author"
     },
     domProps: {
-      value: _vm.book.author
+      value: _vm.formData.author
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "author", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Description")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.description,
+      expression: "formData.description"
+    }],
     staticClass: "form-control",
     attrs: {
       name: "description",
       rows: "5",
       cols: "50"
+    },
+    domProps: {
+      value: _vm.formData.description
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "description", $event.target.value);
+      }
     }
-  }, [_vm._v(_vm._s(_vm.book.description))])])]), _vm._v(" "), _c("tr", [_c("td", {
+  })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Category")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.category,
+      expression: "formData.category"
+    }],
     staticClass: "form-select",
     attrs: {
       name: "category"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.formData, "category", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
     }
   }, [_c("option", {
     attrs: {
       value: "Language"
-    },
-    domProps: {
-      selected: _vm.book.category === "Language" ? "selected" : ""
     }
   }, [_vm._v("Language")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "Learning"
-    },
-    domProps: {
-      selected: _vm.book.category === "Learning" ? "selected" : ""
     }
   }, [_vm._v("Learning")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "Programming"
-    },
-    domProps: {
-      selected: _vm.book.category === "Programming" ? "selected" : ""
     }
   }, [_vm._v("Programming")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "Science Fiction"
-    },
-    domProps: {
-      selected: _vm.book.category === "Science Fiction" ? "selected" : ""
     }
   }, [_vm._v("Science Fiction")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "Detective Story"
-    },
-    domProps: {
-      selected: _vm.book.category === "Detective Story" ? "selected" : ""
     }
   }, [_vm._v("Detective Story")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "Other"
-    },
-    domProps: {
-      selected: _vm.book.category === "Other" ? "selected" : ""
     }
   }, [_vm._v("Other")])])])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Ratings")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.ratings,
+      expression: "formData.ratings"
+    }],
     staticClass: "form-select",
     attrs: {
       name: "ratings"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.formData, "ratings", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
     }
   }, [_c("option", {
     attrs: {
       value: "1"
-    },
-    domProps: {
-      selected: _vm.book.ratings === 1 ? "selected" : ""
     }
   }, [_vm._v("1")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "2"
-    },
-    domProps: {
-      selected: _vm.book.ratings === 2 ? "selected" : ""
     }
   }, [_vm._v("2")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "3"
-    },
-    domProps: {
-      selected: _vm.book.ratings === 3 ? "selected" : ""
     }
   }, [_vm._v("3")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "4"
-    },
-    domProps: {
-      selected: _vm.book.ratings === 4 ? "selected" : ""
     }
   }, [_vm._v("4")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "5"
-    },
-    domProps: {
-      selected: _vm.book.ratings === 5 ? "selected" : ""
     }
   }, [_vm._v("5")])])])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Price")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.price,
+      expression: "formData.price"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "price"
     },
     domProps: {
-      value: _vm.book.price
+      value: _vm.formData.price
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "price", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Stock")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.stock,
+      expression: "formData.stock"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "stock"
     },
     domProps: {
-      value: _vm.book.stock
+      value: _vm.formData.stock
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "stock", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Publisher")]), _vm._v(" "), _c("td", {
     staticClass: "border"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.publisher,
+      expression: "formData.publisher"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       name: "publisher"
     },
     domProps: {
-      value: _vm.book.publisher
+      value: _vm.formData.publisher
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "publisher", $event.target.value);
+      }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
@@ -249,11 +385,47 @@ var render = function render() {
     attrs: {
       type: "text",
       name: "publication_date",
-      "input-class": "form-control",
-      value: _vm.book.publication_date,
-      id: "datepicker"
+      "input-class": "form-control"
+    },
+    model: {
+      value: _vm.formData.publication_date,
+      callback: function callback($$v) {
+        _vm.$set(_vm.formData, "publication_date", $$v);
+      },
+      expression: "formData.publication_date"
     }
-  })], 1)]), _vm._v(" "), _vm._m(1)])])]);
+  })], 1)]), _vm._v(" "), _c("tr", [_c("td", {
+    staticClass: "border",
+    attrs: {
+      colspan: "2"
+    }
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.id,
+      expression: "formData.id"
+    }],
+    attrs: {
+      type: "hidden",
+      name: "book_id"
+    },
+    domProps: {
+      value: _vm.formData.id
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "id", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit",
+      value: "Update Book"
+    }
+  })])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -265,21 +437,6 @@ var staticRenderFns = [function () {
       name: "image"
     }
   })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("tr", [_c("td", {
-    staticClass: "border",
-    attrs: {
-      colspan: "2"
-    }
-  }, [_c("input", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      type: "submit",
-      value: "Update Book"
-    }
-  })])]);
 }];
 render._withStripped = true;
 

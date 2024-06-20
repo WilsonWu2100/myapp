@@ -55,7 +55,6 @@ __webpack_require__.r(__webpack_exports__);
       // Append the image file.
       formData.append('image', this.imageFile);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/book/add', formData).then(function (response) {
-        // Handle response if needed
         _this.message = response.data['message'];
       })["catch"](function (error) {
         // Handle error if needed

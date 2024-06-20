@@ -124,7 +124,6 @@
 
                 axios.post('/book/add', formData)
                 .then(response => {
-                    // Handle response if needed
                     this.message = response.data['message'];
                 })
                 .catch(error => {

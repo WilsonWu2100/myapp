@@ -20,7 +20,13 @@ class BookController extends Controller
 
     public function showBook($id)
     {
-        return view('update_book', ['book' => Book::find($id)]);
+        return view('update_book');
+    }
+
+    public function getBook($id)
+    {
+        $book = Book::find($id);
+        return response()->json($book);
     }
 
     /**
@@ -64,6 +70,7 @@ class BookController extends Controller
         $book->save();
         $message = ['message' => 'New book has been added successfully!'];
         return response()->json($message);
+       // return redirect()->route('books')->with('message', 'New content added successfully!');
     }
 
     /**
@@ -103,7 +110,8 @@ class BookController extends Controller
         $book->publisher = $request->input('publisher');
         $book->updated_at = now();
         $book->update();
-        return redirect()->back()->with('message', 'The book has been updated successfully!');
+        $message = ['message' => 'The book has been updated successfully!'];
+        return response()->json($message);
     }
 
     /**
