@@ -11,11 +11,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    DatePicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+    DatePicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -44,8 +47,7 @@ __webpack_require__.r(__webpack_exports__);
     // Fetch book details.
     fetchBook: function fetchBook() {
       var _this = this;
-      axios.get('/api' + window.location.pathname).then(function (response) {
-        console.log(response.data);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api' + window.location.pathname).then(function (response) {
         _this.formData = response.data;
         _this.imageUrl = '/images/' + response.data['image'];
       })["catch"](function (error) {
@@ -55,11 +57,26 @@ __webpack_require__.r(__webpack_exports__);
     //Update book.
     updateBook: function updateBook() {
       var _this2 = this;
-      axios.post(window.location.href, this.formData).then(function (response) {
+      var formData = new FormData();
+
+      // Append all form data to formData.
+      for (var key in this.formData) {
+        if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+          formData.append(key, this.formData[key]);
+        }
+      }
+
+      // Update the image file.
+      formData.append('image', this.imageFile);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(window.location.href, formData).then(function (response) {
         _this2.message = response.data['message'];
       })["catch"](function (error) {
         console.error('Error saving data:', error);
       });
+    },
+    // Get the uploaded file.
+    handleFileUpload: function handleFileUpload(event) {
+      this.imageFile = event.target.files[0];
     }
   }
 });
@@ -130,7 +147,16 @@ var render = function render() {
       height: "192",
       alt: "book image"
     }
-  })]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("tr", [_c("td", {
+  })]), _vm._v(" "), _c("div", [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      name: "image"
+    },
+    on: {
+      change: _vm.handleFileUpload
+    }
+  })])])]), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Isbn")]), _vm._v(" "), _c("td", {
     staticClass: "border"
@@ -427,17 +453,7 @@ var render = function render() {
     }
   })])])])])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "file",
-      name: "image"
-    }
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

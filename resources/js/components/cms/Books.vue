@@ -6,11 +6,11 @@
             </h5>
         </div>
 
-        <div class="row justify-content-between mt-4">
-            <div class="col-4">
+        <div class="row mt-4">
+            <div class="col text-start">
                 <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
             </div>
-            <div class="col-4 text-end">
+            <div class="col text-end">
                 <form :action="searchRoute" method="GET" class="row g-2 mb-2 float-end">
                     <div class="col-auto">
                         <input type="text" name="search" placeholder="Search books" class="form-control" :value="search">
@@ -22,6 +22,7 @@
             </div>
         </div>
 
+        <div class="row">
         <table id="bookTable" class="w-100 mt-2">
             <thead>
             <tr>
@@ -45,7 +46,7 @@
                     <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
                 </td>
                 <td class="border">{{ book.name }}</td>
-                <td class="border">{{ book.isbn }}</td>
+                <td class="border isbn">{{ book.isbn }}</td>
                 <td class="border">{{ book.author }}</td>
                 <td class="border">{{ book.category }}</td>
                 <td class="border">{{ book.ratings }}</td>
@@ -70,6 +71,7 @@
 
         <div class="overflow-auto d-flex justify-content-center mt-4">
             <b-pagination-nav :link-gen="linkGen" :number-of-pages="getPageNum" use-router></b-pagination-nav>
+        </div>
         </div>
     </div>
 </template>

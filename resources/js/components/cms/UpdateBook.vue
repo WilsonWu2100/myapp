@@ -16,7 +16,7 @@
                     <td class="border">Image</td>
                     <td class="border">
                         <div><img :src="imageUrl" class="mb-2" name="image" width="auto" height="192" alt="book image"/></div>
-                        <div><input type='file' name='image' class="form-control"></div>
+                        <div><input type='file' name='image' class="form-control" @change="handleFileUpload"></div>
                     </td>
                 </tr>
                 <tr>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import DatePicker from 'vuejs-datepicker';
 
     export default {
@@ -119,7 +120,6 @@
             fetchBook() {
                 axios.get('/api' +  window.location.pathname)
                 .then(response => {
-                    console.log(response.data);
                     this.formData = response.data;
                     this.imageUrl = '/images/' + response.data['image'];
                 })
@@ -130,14 +130,31 @@
 
             //Update book.
             updateBook() {
-                axios.post(window.location.href, this.formData)
+                const formData = new FormData();
+
+                // Append all form data to formData.
+                for (const key in this.formData) {
+                    if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+                        formData.append(key, this.formData[key]);
+                    }
+                }
+
+                // Update the image file.
+                formData.append('image', this.imageFile);
+
+                axios.post(window.location.href, formData)
                 .then(response => {
                     this.message = response.data['message'];
                 })
                 .catch(error => {
                     console.error('Error saving data:', error);
                 });
-            }
+            },
+
+            // Get the uploaded file.
+            handleFileUpload(event) {
+                this.imageFile = event.target.files[0];
+            },
         }
     }
 </script>

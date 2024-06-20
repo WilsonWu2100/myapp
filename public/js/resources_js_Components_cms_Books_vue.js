@@ -74,9 +74,9 @@ var render = function render() {
   return _c("div", [_vm.message ? _c("div", [_c("h5", {
     staticClass: "alert alert-success"
   }, [_vm._v("\n            " + _vm._s(_vm.message) + "\n        ")])]) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "row justify-content-between mt-4"
+    staticClass: "row mt-4"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "col-4 text-end"
+    staticClass: "col text-end"
   }, [_c("form", {
     staticClass: "row g-2 mb-2 float-end",
     attrs: {
@@ -95,7 +95,9 @@ var render = function render() {
     domProps: {
       value: _vm.search
     }
-  })]), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _c("table", {
+  })]), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("table", {
     staticClass: "w-100 mt-2",
     attrs: {
       id: "bookTable"
@@ -114,7 +116,7 @@ var render = function render() {
     })]), _vm._v(" "), _c("td", {
       staticClass: "border"
     }, [_vm._v(_vm._s(book.name))]), _vm._v(" "), _c("td", {
-      staticClass: "border"
+      staticClass: "border isbn"
     }, [_vm._v(_vm._s(book.isbn))]), _vm._v(" "), _c("td", {
       staticClass: "border"
     }, [_vm._v(_vm._s(book.author))]), _vm._v(" "), _c("td", {
@@ -159,13 +161,13 @@ var render = function render() {
       "number-of-pages": _vm.getPageNum,
       "use-router": ""
     }
-  })], 1)]);
+  })], 1)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-4"
+    staticClass: "col text-start"
   }, [_c("a", {
     attrs: {
       href: "/book/add"
