@@ -34,12 +34,9 @@
                     <td class="border">Category</td>
                     <td class="border">
                         <select name="category" class="form-select" v-model="formData.category">
-                            <option value="Language">Language</option>
-                            <option value="Learning">Learning</option>
-                            <option value="Programming">Programming</option>
-                            <option value="Science Fiction">Science Fiction</option>
-                            <option value="Detective Story">Detective Story</option>
-                            <option value="Other">Other</option>
+                            <option v-for="category in categories" :value="category.id">
+                                {{ category.name }}
+                            </option>
                         </select>
                     </td>
                 </tr>
@@ -104,11 +101,17 @@
                     publisher: '',
                     publication_date: ''
                 },
-                message: ''
+                message: '',
+                categories: ''
             };
         },
 
+        mounted() {
+            this.getCategories();
+        },
+
         methods: {
+            // Add book.
             addBook() {
                 const formData = new FormData();
 
@@ -134,6 +137,17 @@
             // Get the uploaded file.
             handleFileUpload(event) {
                 this.imageFile = event.target.files[0];
+            },
+
+            // Get all categories.
+            async getCategories() {
+                await axios.get(`/api/categories`)
+                .then(response => {
+                    this.categories = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
             },
         },
     }
