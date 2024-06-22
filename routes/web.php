@@ -45,3 +45,5 @@ Route::get('/search', [BookController::class, 'searchBook'])->name('books.search
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/api/categories', [App\Http\Controllers\CategoryController::class, 'getAllCategories']);

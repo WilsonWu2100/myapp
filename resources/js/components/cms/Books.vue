@@ -43,12 +43,22 @@
             <tr v-for="(book, index) in books.data">
                 <td class="border">{{ book.id }}</td>
                 <td class="border">
-                    <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
+                    <a :href="`/book/${book.id}/edit`">
+                        <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
+                    </a>
                 </td>
-                <td class="border">{{ book.name }}</td>
+                <td class="border">
+                    <a :href="`/book/${book.id}/edit`" class="text-decoration-none">
+                        {{ book.name }}
+                    </a>
+                </td>
                 <td class="border isbn">{{ book.isbn }}</td>
                 <td class="border">{{ book.author }}</td>
-                <td class="border">{{ book.category }}</td>
+                <td class="border">
+                    <div v-for="category in categories" :key="category.id">
+                        <span v-if="category.id === book.category">{{ category.name }}</span>
+                    </div>
+                </td>
                 <td class="border">{{ book.ratings }}</td>
                 <td class="border">{{ book.price }}</td>
                 <td class="border">{{ book.stock }}</td>
@@ -89,15 +99,16 @@
 
         data() {
             return {
-                message: ''
+                message: '',
+                categories: ''
             };
         },
 
-        methods: {
-            linkGen(pageNum) {
-                return pageNum === 1 ? '?' : `?page=${pageNum}`
-            },
+        mounted() {
+            this.getCategories();
+        },
 
+        methods: {
             // Ask the user to confirm the deletion, if the user confirms, proceed with the deletion.
             confirmDelete(id) {
                 if (window.confirm('Are you sure you want to delete this record?')) {
@@ -105,6 +116,7 @@
                 }
             },
 
+            // Delete book.
             deleteRecord(id) {
                 // Make an HTTP DELETE request to delete the record with the given ID
                 axios.delete(`/book/${id}/delete`)
@@ -116,6 +128,21 @@
                 .catch(error => {
                     console.error('Error deleting record:', error);
                 });
+            },
+
+            // Get all categories.
+            async getCategories() {
+                axios.get(`/api/categories`)
+                .then(response => {
+                    this.categories = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+
+            linkGen(pageNum) {
+                return pageNum === 1 ? '?' : `?page=${pageNum}`
             }
         },
 

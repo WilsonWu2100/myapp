@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->string('isbn')->nullable();
             $table->string('author')->nullable();
             $table->longText('description')->nullable();
-            $table->string('category')->nullable();
+            $table->integer('category')->nullable();
             $table->integer('ratings');
             $table->float('price');
             $table->integer('stock');
