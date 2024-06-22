@@ -24,7 +24,7 @@ class BookController extends Controller
 
     public function getBook($id)
     {
-        $book = Book::find($id);
+        $book = Book::with('stock')->find($id);
         return response()->json($book);
     }
 
@@ -126,7 +126,7 @@ class BookController extends Controller
     public function searchBook(Request $request)
     {
         $search = $request->input('search');
-        $results = Book::where('name', 'like', "%$search%")
+        $results = Book::with('stock')->where('name', 'like', "%$search%")
             ->orWhere('author', 'like', "%$search%")
             ->orWhere('category', 'like', "%$search%")
             ->orWhere('publisher', 'like', "%$search%")

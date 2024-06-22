@@ -11,7 +11,7 @@
                 <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
             </div>
             <div class="col text-end">
-                <form :action="searchRoute" method="GET" class="row g-2 mb-2 float-end">
+                <form action="/search" method="GET" class="row g-2 mb-2 float-end">
                     <div class="col-auto">
                         <input type="text" name="search" placeholder="Search books" class="form-control" :value="search">
                     </div>

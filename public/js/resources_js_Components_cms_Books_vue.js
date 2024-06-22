@@ -108,7 +108,7 @@ var render = function render() {
   }, [_c("form", {
     staticClass: "row g-2 mb-2 float-end",
     attrs: {
-      action: _vm.searchRoute,
+      action: "/search",
       method: "GET"
     }
   }, [_c("div", {
