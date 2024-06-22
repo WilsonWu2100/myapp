@@ -1,6 +1,6 @@
 <?php
 
-use Database\Seeders\CategorySeeder;
+use Database\Seeders\StockSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('book_id');
+            $table->integer('quantity');
             $table->timestamps();
+            $table->foreign('book_id')->references('id')->on('books');
         });
 
         Artisan::call('db:seed', [
-            '--class' => CategorySeeder::class,
+            '--class' => StockSeeder::class,
         ]);
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('stocks');
     }
 };

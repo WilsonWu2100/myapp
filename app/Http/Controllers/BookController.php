@@ -13,7 +13,7 @@ class BookController extends Controller
     public function getAllBooks()
     {
         return view('books', [
-            'books' => Book::paginate(10)
+            'books' => Book::with('stock')->paginate(10)
         ]);
     }
 
@@ -62,7 +62,6 @@ class BookController extends Controller
         $book->category = $request->input('category');
         $book->ratings = $request->input('ratings') ? $request->input('ratings') : 0;
         $book->price = $request->input('price') ? $request->input('price') : 0;
-        $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
         $book->created_at = now();
         $book->updated_at = now();
@@ -104,7 +103,6 @@ class BookController extends Controller
         $book->category = $request->input('category');
         $book->ratings = $request->input('ratings') ? $request->input('ratings') : 0;
         $book->price = $request->input('price') ? $request->input('price') : 0;
-        $book->stock = $request->input('stock') ? $request->input('stock') : 0;
         $book->publisher = $request->input('publisher');
         $book->updated_at = now();
         $book->update();

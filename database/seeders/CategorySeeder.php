@@ -18,26 +18,38 @@ class CategorySeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Language',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 2,
                 'name' => 'Learning',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 3,
                 'name' => 'Programming',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 4,
                 'name' => 'Science Fiction',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 5,
                 'name' => 'Detective Story',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 6,
                 'name' => 'Other',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ];
 

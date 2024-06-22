@@ -36,7 +36,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         category: '',
         ratings: '',
         price: '',
-        stock: '',
         publisher: '',
         publication_date: ''
       },
@@ -360,32 +359,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "price", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _c("tr", [_c("td", {
-    staticClass: "border"
-  }, [_vm._v("Stock")]), _vm._v(" "), _c("td", {
-    staticClass: "border"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.stock,
-      expression: "formData.stock"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "stock"
-    },
-    domProps: {
-      value: _vm.formData.stock
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.formData, "stock", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("tr", [_c("td", {
+  })])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("tr", [_c("td", {
     staticClass: "border"
   }, [_vm._v("Publisher")]), _vm._v(" "), _c("td", {
     staticClass: "border"
@@ -460,7 +434,21 @@ var render = function render() {
     }
   })])])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("tr", [_c("td", {
+    staticClass: "border"
+  }, [_vm._v("Stock")]), _vm._v(" "), _c("td", {
+    staticClass: "border"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "stock"
+    }
+  })])]);
+}];
 render._withStripped = true;
 
 

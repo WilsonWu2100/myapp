@@ -168,7 +168,7 @@ var render = function render() {
       staticClass: "border"
     }, [_vm._v(_vm._s(book.price))]), _vm._v(" "), _c("td", {
       staticClass: "border"
-    }, [_vm._v(_vm._s(book.stock))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(book.stock.quantity))]), _vm._v(" "), _c("td", {
       staticClass: "border"
     }, [_vm._v(_vm._s(book.publisher))]), _vm._v(" "), _c("td", {
       staticClass: "border"

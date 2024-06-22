@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                     <td class="border">Stock</td>
-                    <td class="border"><input type='text' name='stock' class="form-control" v-model="formData.stock"/></td>
+                    <td class="border"><input type='text' name='stock' class="form-control"/></td>
                 </tr>
                 <tr>
                     <td class="border">Publisher</td>
@@ -99,7 +99,6 @@
                     category: '',
                     ratings: '',
                     price: '',
-                    stock: '',
                     publisher: '',
                     publication_date: ''
                 },
