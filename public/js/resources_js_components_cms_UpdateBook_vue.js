@@ -39,7 +39,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         stock: {
           quantity: ''
         },
-        publisher: '',
+        publisher: {
+          test: '',
+          world: ''
+        },
         publication_date: ''
       },
       imageUrl: '',
@@ -73,6 +76,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           formData.append(key, this.formData[key]);
         }
       }
+
+      // Append stock quantity.
+      formData.append('stock', this.formData.stock.quantity);
 
       // Update the image file.
       formData.append('image', this.imageFile);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Stock;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
@@ -106,6 +107,11 @@ class BookController extends Controller
         $book->publisher = $request->input('publisher');
         $book->updated_at = now();
         $book->update();
+
+        $stock = Stock::where('book_id', $id)->first();
+        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
+        $stock->update();
+
         $message = ['message' => 'The book has been updated successfully!'];
         return response()->json($message);
     }
