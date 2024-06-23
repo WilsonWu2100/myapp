@@ -133,6 +133,18 @@
             updateBook() {
                 const formData = new FormData();
 
+
+                Object.keys(this.formData).forEach(key => {
+                    if (typeof this.formData[key] === 'object' && this.formData[key] !== null) {
+                        // Handle nested objects (e.g., stock.quantity)
+                        Object.keys(this.formData[key]).forEach(subKey => {
+                            formData.append(`${key}.${subKey}`, this.formData[key][subKey]);
+                        });
+                    } else {
+                        formData.append(key, this.formData[key]);
+                    }
+                });
+
                 // Append all form data to formData.
                 for (const key in this.formData) {
                     if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
