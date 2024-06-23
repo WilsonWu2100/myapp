@@ -28,7 +28,7 @@
             <tr>
                 <th class="border">ID</th>
                 <th class="border">Image</th>
-                <th class="border">Book Name</th>
+                <th class="border">Name</th>
                 <th class="border">ISBN</th>
                 <th class="border">Author</th>
                 <th class="border">Category</th>

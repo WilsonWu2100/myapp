@@ -236,7 +236,7 @@ var staticRenderFns = [function () {
     staticClass: "border"
   }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
     staticClass: "border"
-  }, [_vm._v("Book Name")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Name")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
     staticClass: "border"

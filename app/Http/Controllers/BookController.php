@@ -67,6 +67,14 @@ class BookController extends Controller
         $book->created_at = now();
         $book->updated_at = now();
         $book->save();
+
+        $stock = new Stock;
+        $stock->book_id = $book->id;
+        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;;
+        $stock->created_at = now();
+        $stock->updated_at = now();
+        $stock->save();
+
         $message = ['message' => 'New book has been added successfully!'];
         return response()->json($message);
     }
@@ -75,7 +83,8 @@ class BookController extends Controller
      * Update a book by id.
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function updateBook(Request $request, $id)
     {
@@ -129,6 +138,9 @@ class BookController extends Controller
         return response()->json($message);
     }
 
+    /**
+     * @param Request $request
+     */
     public function searchBook(Request $request)
     {
         $search = $request->input('search');

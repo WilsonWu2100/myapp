@@ -102,10 +102,7 @@
                     stock: {
                         quantity: ''
                     },
-                    publisher: {
-                        test: '',
-                        world:''
-                    },
+                    publisher: '',
                     publication_date: ''
                 },
                 imageUrl: '',

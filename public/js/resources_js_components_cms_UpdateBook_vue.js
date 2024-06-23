@@ -39,10 +39,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         stock: {
           quantity: ''
         },
-        publisher: {
-          test: '',
-          world: ''
-        },
+        publisher: '',
         publication_date: ''
       },
       imageUrl: '',

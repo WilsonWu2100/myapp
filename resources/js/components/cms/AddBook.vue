@@ -58,7 +58,7 @@
                 </tr>
                 <tr class="border">
                     <td class="border">Stock</td>
-                    <td><input type='text' name='stock' class="form-control"/></td>
+                    <td><input type='text' name='stock' class="form-control" v-model="formData.stock.quantity"/></td>
                 </tr>
                 <tr>
                     <td class="border">Publisher</td>
@@ -97,6 +97,9 @@
                     category: '',
                     ratings: '',
                     price: '',
+                    stock: {
+                        quantity: ''
+                    },
                     publisher: '',
                     publication_date: ''
                 },
@@ -120,6 +123,9 @@
                         formData.append(key, this.formData[key]);
                     }
                 }
+
+                // Append stock quantity.
+                formData.append('stock', this.formData.stock.quantity);
 
                 // Append the image file.
                 formData.append('image', this.imageFile);
