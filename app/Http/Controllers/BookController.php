@@ -7,15 +7,18 @@ use App\Models\Stock;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class BookController extends Controller
 {
+    public function showBooks()
+    {
+        return view('books');
+    }
+
     public function getAllBooks()
     {
-        return view('books', [
-            'books' => Book::with('stock')->paginate(10)
-        ]);
+        $books = Book::with('stock')->paginate(10);
+        return response()->json($books);
     }
 
     public function showBook($id)

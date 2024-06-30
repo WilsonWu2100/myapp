@@ -23,65 +23,72 @@
         </div>
 
         <div class="row">
-        <table id="bookTable" class="w-100 mt-2">
-            <thead>
-            <tr>
-                <th class="border">ID</th>
-                <th class="border">Image</th>
-                <th class="border">Name</th>
-                <th class="border">ISBN</th>
-                <th class="border">Author</th>
-                <th class="border">Category</th>
-                <th class="border">Ratings</th>
-                <th class="border">Price</th>
-                <th class="border">Stock</th>
-                <th class="border">Publisher</th>
-                <th class="border publication_date">Publication Date</th>
-                <th class="border">Operations</th>
-            </tr>
-            </thead>
-            <tr v-for="(book, index) in books.data">
-                <td class="border">{{ book.id }}</td>
-                <td class="border">
-                    <a :href="`/book/${book.id}/edit`">
-                        <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
-                    </a>
-                </td>
-                <td class="border">
-                    <a :href="`/book/${book.id}/edit`" class="text-decoration-none">
-                        {{ book.name }}
-                    </a>
-                </td>
-                <td class="border isbn">{{ book.isbn }}</td>
-                <td class="border">{{ book.author }}</td>
-                <td class="border">
-                    <div v-for="category in categories" :key="category.id">
-                        <span v-if="category.id === book.category">{{ category.name }}</span>
-                    </div>
-                </td>
-                <td class="border">{{ book.ratings }}</td>
-                <td class="border">{{ book.price }}</td>
-                <td class="border">{{ book.stock.quantity }}</td>
-                <td class="border">{{ book.publisher }}</td>
-                <td class="border">{{ book.publication_date }}</td>
-                <td class="border">
-                    <div class="d-flex">
-                        <div class="p-1">
-                            <a :href="`/book/${book.id}/edit`">
-                                <button class="btn btn-primary">Edit</button>
-                            </a>
+            <table id="bookTable" class="w-100 mt-2">
+                <thead>
+                <tr>
+                    <th class="border">ID</th>
+                    <th class="border">Image</th>
+                    <th @click="sortBy('name')" class="border">Name
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </th>
+                    <th class="border">ISBN</th>
+                    <th class="border">Author</th>
+                    <th class="border">Category</th>
+                    <th class="border">Ratings</th>
+                    <th class="border">Price</th>
+                    <th class="border">Stock</th>
+                    <th class="border">Publisher</th>
+                    <th class="border publication_date">Publication Date</th>
+                    <th class="border">Operations</th>
+                </tr>
+                </thead>
+                <tr v-for="(book, index) in this.books.data">
+                    <td class="border">{{ book.id }}</td>
+                    <td class="border">
+                        <a :href="`/book/${book.id}/edit`">
+                            <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
+                        </a>
+                    </td>
+                    <td class="border">
+                        <a :href="`/book/${book.id}/edit`" class="text-decoration-none">
+                            {{ book.name }}
+                        </a>
+                    </td>
+                    <td class="border isbn">{{ book.isbn }}</td>
+                    <td class="border">{{ book.author }}</td>
+                    <td class="border">
+                        <div v-for="category in categories" :key="category.id">
+                            <span v-if="category.id === book.category">{{ category.name }}</span>
                         </div>
-                        <div class="p-1">
-                            <button @click="confirmDelete(book.id)" class="btn btn-primary">Delete</button>
+                    </td>
+                    <td class="border">{{ book.ratings }}</td>
+                    <td class="border">{{ book.price }}</td>
+                    <td class="border">{{ book.stock.quantity }}</td>
+                    <td class="border">{{ book.publisher }}</td>
+                    <td class="border">{{ book.publication_date }}</td>
+                    <td class="border">
+                        <div class="d-flex">
+                            <div class="p-1">
+                                <a :href="`/book/${book.id}/edit`">
+                                    <button class="btn btn-primary">Edit</button>
+                                </a>
+                            </div>
+                            <div class="p-1">
+                                <button @click="confirmDelete(book.id)" class="btn btn-primary">Delete</button>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+                    </td>
+                </tr>
+            </table>
 
-        <div class="overflow-auto d-flex justify-content-center mt-4">
-            <b-pagination-nav :link-gen="linkGen" :number-of-pages="getPageNum" use-router></b-pagination-nav>
-        </div>
+            <div class="overflow-auto d-flex justify-content-center mt-4">
+                <b-pagination-nav :link-gen="linkGen" :number-of-pages="this.totalPages" use-router></b-pagination-nav>
+            </div>
         </div>
     </div>
 </template>
@@ -91,7 +98,7 @@
     import { BPaginationNav } from 'bootstrap-vue';
 
     export default {
-        props: ['searchRoute', 'search', 'books'],
+        props: ['searchRoute', 'search'],
 
         components: {
             BPaginationNav
@@ -100,11 +107,14 @@
         data() {
             return {
                 message: '',
-                categories: ''
+                categories: '',
+                books: '',
+                totalPages: 1,
             };
         },
 
         mounted() {
+            this.getBooks();
             this.getCategories();
         },
 
@@ -130,9 +140,25 @@
                 });
             },
 
+            linkGen(pageNum) {
+                return pageNum === 1 ? '?' : `?page=${pageNum}`
+            },
+
+            // Get all books.
+            async getBooks() {
+                await axios.get(`/api/books` + window.location.search)
+                .then(response => {
+                    this.books = response.data;
+                    this.totalPages = response.data.last_page;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+
             // Get all categories.
             async getCategories() {
-                axios.get(`/api/categories`)
+                await axios.get(`/api/categories`)
                 .then(response => {
                     this.categories = response.data;
                 })
@@ -140,16 +166,10 @@
                     console.error('Error fetching data:', error);
                 });
             },
-
-            linkGen(pageNum) {
-                return pageNum === 1 ? '?' : `?page=${pageNum}`
-            }
         },
 
         computed: {
-            getPageNum() {
-                return Math.floor(this.books.total / 10 + 1);
-            }
+
         }
     }
 </script>

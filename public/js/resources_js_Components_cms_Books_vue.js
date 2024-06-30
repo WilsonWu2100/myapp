@@ -21,17 +21,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['searchRoute', 'search', 'books'],
+  props: ['searchRoute', 'search'],
   components: {
     BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__.BPaginationNav
   },
   data: function data() {
     return {
       message: '',
-      categories: ''
+      categories: '',
+      books: '',
+      totalPages: 1
     };
   },
   mounted: function mounted() {
+    this.getBooks();
     this.getCategories();
   },
   methods: {
@@ -53,34 +56,52 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         console.error('Error deleting record:', error);
       });
     },
-    // Get all categories.
-    getCategories: function getCategories() {
+    linkGen: function linkGen(pageNum) {
+      return pageNum === 1 ? '?' : "?page=".concat(pageNum);
+    },
+    // Get all books.
+    getBooks: function getBooks() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/categories").then(function (response) {
-                _this2.categories = response.data;
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/books" + window.location.search).then(function (response) {
+                _this2.books = response.data;
+                _this2.totalPages = response.data.last_page;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
-            case 1:
+            case 2:
             case "end":
               return _context.stop();
           }
         }, _callee);
       }))();
     },
-    linkGen: function linkGen(pageNum) {
-      return pageNum === 1 ? '?' : "?page=".concat(pageNum);
+    // Get all categories.
+    getCategories: function getCategories() {
+      var _this3 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/categories").then(function (response) {
+                _this3.categories = response.data;
+              })["catch"](function (error) {
+                console.error('Error fetching data:', error);
+              });
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     }
   },
-  computed: {
-    getPageNum: function getPageNum() {
-      return Math.floor(this.books.total / 10 + 1);
-    }
-  }
+  computed: {}
 });
 
 /***/ }),
@@ -130,7 +151,62 @@ var render = function render() {
     attrs: {
       id: "bookTable"
     }
-  }, [_vm._m(2), _vm._v(" "), _vm._l(_vm.books.data, function (book, index) {
+  }, [_c("thead", [_c("tr", [_c("th", {
+    staticClass: "border"
+  }, [_vm._v("ID")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
+    staticClass: "border",
+    on: {
+      click: function click($event) {
+        return _vm.sortBy("name");
+      }
+    }
+  }, [_vm._v("Name\n                    "), _c("svg", {
+    staticClass: "bi bi-caret-up-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+    }
+  })]), _vm._v(" "), _c("svg", {
+    staticClass: "bi bi-caret-down-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+    }
+  })])]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Author")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Ratings")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Price")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Publisher")]), _vm._v(" "), _c("th", {
+    staticClass: "border publication_date"
+  }, [_vm._v("Publication Date")]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_vm._v("Operations")])])]), _vm._v(" "), _vm._l(this.books.data, function (book, index) {
     return _c("tr", [_c("td", {
       staticClass: "border"
     }, [_vm._v(_vm._s(book.id))]), _vm._v(" "), _c("td", {
@@ -152,7 +228,7 @@ var render = function render() {
       attrs: {
         href: "/book/".concat(book.id, "/edit")
       }
-    }, [_vm._v("\n                    " + _vm._s(book.name) + "\n                ")])]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                        " + _vm._s(book.name) + "\n                    ")])]), _vm._v(" "), _c("td", {
       staticClass: "border isbn"
     }, [_vm._v(_vm._s(book.isbn))]), _vm._v(" "), _c("td", {
       staticClass: "border"
@@ -199,7 +275,7 @@ var render = function render() {
   }, [_c("b-pagination-nav", {
     attrs: {
       "link-gen": _vm.linkGen,
-      "number-of-pages": _vm.getPageNum,
+      "number-of-pages": this.totalPages,
       "use-router": ""
     }
   })], 1)])]);
@@ -227,34 +303,6 @@ var staticRenderFns = [function () {
       type: "submit"
     }
   }, [_vm._v("Search")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", {
-    staticClass: "border"
-  }, [_vm._v("ID")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Name")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Author")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Ratings")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Price")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Publisher")]), _vm._v(" "), _c("th", {
-    staticClass: "border publication_date"
-  }, [_vm._v("Publication Date")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Operations")])])]);
 }];
 render._withStripped = true;
 
