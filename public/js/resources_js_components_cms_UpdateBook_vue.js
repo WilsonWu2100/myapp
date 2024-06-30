@@ -35,15 +35,16 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         description: '',
         category: '',
         ratings: '',
-        price: '',
+        price: 0,
         stock: {
-          quantity: ''
+          quantity: 0
         },
         publisher: '',
         publication_date: ''
       },
       imageUrl: '',
       message: '',
+      alertClass: '',
       categories: ''
     };
   },
@@ -79,8 +80,23 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
       // Update the image file.
       formData.append('image', this.imageFile);
+
+      // Validate Price.
+      if (isNaN(this.formData.price) || this.formData.price === '') {
+        this.message = 'Please enter a valid Price.';
+        this.alertClass = 'alert-danger';
+        return;
+      }
+
+      // Validate Stock.
+      if (isNaN(this.formData.stock.quantity) || this.formData.stock.quantity === '') {
+        this.message = 'Please enter a valid Stock.';
+        this.alertClass = 'alert-danger';
+        return;
+      }
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(window.location.href, formData).then(function (response) {
         _this2.message = response.data['message'];
+        _this2.alertClass = 'alert-success';
       })["catch"](function (error) {
         console.error('Error saving data:', error);
       });
@@ -129,7 +145,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_vm.message ? _c("div", [_c("h5", {
-    staticClass: "alert alert-success"
+    "class": [_vm.alertClass, "alert"]
   }, [_vm._v("\n            " + _vm._s(_vm.message) + "\n        ")])]) : _vm._e(), _vm._v(" "), _c("form", {
     attrs: {
       enctype: "multipart/form-data"

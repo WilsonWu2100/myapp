@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="message">
-            <h5 class="alert alert-success">
+            <h5 :class="[alertClass, 'alert']">
                 {{ message }}
             </h5>
         </div>
@@ -96,14 +96,15 @@
                     description: '',
                     category: '',
                     ratings: '',
-                    price: '',
+                    price: 0,
                     stock: {
-                        quantity: ''
+                        quantity: 0
                     },
                     publisher: '',
                     publication_date: ''
                 },
                 message: '',
+                alertClass: '',
                 categories: ''
             };
         },
@@ -130,9 +131,24 @@
                 // Append the image file.
                 formData.append('image', this.imageFile);
 
+                // Validate Price.
+                if (isNaN(this.formData.price) || this.formData.price === '') {
+                    this.message = 'Please enter a valid Price.';
+                    this.alertClass = 'alert-danger';
+                    return;
+                }
+
+                // Validate Stock.
+                if (isNaN(this.formData.stock.quantity) || this.formData.stock.quantity === '') {
+                    this.message = 'Please enter a valid Stock.';
+                    this.alertClass = 'alert-danger';
+                    return;
+                }
+
                 axios.post('/book/add', formData)
                 .then(response => {
                     this.message = response.data['message'];
+                    this.alertClass = 'alert-success';
                 })
                 .catch(error => {
                     // Handle error if needed
