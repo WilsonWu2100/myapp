@@ -135,8 +135,12 @@ class BookController extends Controller
      */
     public function deleteBook($id)
     {
+        $stock = Stock::where('book_id', $id)->first();
+        $stock->delete();
+
         $book = Book::find($id);
         $book->delete();
+
         $message = ['message' => 'The book has been deleted successfully!'];
         return response()->json($message);
     }
