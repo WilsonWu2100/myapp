@@ -11,14 +11,14 @@
                 <a href="/book/add"><button class="btn btn-primary">Add New Book</button></a>
             </div>
             <div class="col text-end">
-                <form action="/search" method="GET" class="row g-2 mb-2 float-end">
+                <div class="row g-2 mb-2 float-end">
                     <div class="col-auto">
-                        <input type="text" name="search" placeholder="Search books" class="form-control" :value="search">
+                        <input type="text" name="search" placeholder="Search books" class="form-control" v-model="search">
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button @click="searchBooks" class="btn btn-primary">Search</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -98,8 +98,6 @@
     import { BPaginationNav } from 'bootstrap-vue';
 
     export default {
-        props: ['searchRoute', 'search'],
-
         components: {
             BPaginationNav
         },
@@ -110,6 +108,7 @@
                 categories: '',
                 books: '',
                 totalPages: 1,
+                search: ''
             };
         },
 
@@ -161,6 +160,18 @@
                 await axios.get(`/api/categories`)
                 .then(response => {
                     this.categories = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+
+            // Search books.
+            async searchBooks() {
+                await axios.get(`/api/search?search=${this.search}`)
+                .then(response => {
+                    this.books = response.data;
+                    this.totalPages = response.data.last_page;
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);

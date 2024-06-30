@@ -143,6 +143,7 @@ class BookController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function searchBook(Request $request)
     {
@@ -152,6 +153,6 @@ class BookController extends Controller
             ->orWhere('category', 'like', "%$search%")
             ->orWhere('publisher', 'like', "%$search%")
             ->paginate(10);
-        return view('books', ['books' => $results]);
+        return response()->json($results);
     }
 }

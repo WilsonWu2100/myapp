@@ -21,7 +21,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['searchRoute', 'search'],
   components: {
     BPaginationNav: bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__.BPaginationNav
   },
@@ -30,7 +29,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       message: '',
       categories: '',
       books: '',
-      totalPages: 1
+      totalPages: 1,
+      search: ''
     };
   },
   mounted: function mounted() {
@@ -99,6 +99,27 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           }
         }, _callee2);
       }))();
+    },
+    // Search books.
+    searchBooks: function searchBooks() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search?search=".concat(_this4.search)).then(function (response) {
+                _this4.books = response.data;
+                _this4.totalPages = response.data.last_page;
+              })["catch"](function (error) {
+                console.error('Error fetching data:', error);
+              });
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }))();
     }
   },
   computed: {}
@@ -126,15 +147,17 @@ var render = function render() {
     staticClass: "row mt-4"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "col text-end"
-  }, [_c("form", {
-    staticClass: "row g-2 mb-2 float-end",
-    attrs: {
-      action: "/search",
-      method: "GET"
-    }
+  }, [_c("div", {
+    staticClass: "row g-2 mb-2 float-end"
   }, [_c("div", {
     staticClass: "col-auto"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search,
+      expression: "search"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
@@ -143,8 +166,21 @@ var render = function render() {
     },
     domProps: {
       value: _vm.search
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.search = $event.target.value;
+      }
     }
-  })]), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    on: {
+      click: _vm.searchBooks
+    }
+  }, [_vm._v("Search")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("table", {
     staticClass: "w-100 mt-2",
@@ -292,17 +328,6 @@ var staticRenderFns = [function () {
   }, [_c("button", {
     staticClass: "btn btn-primary"
   }, [_vm._v("Add New Book")])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-auto"
-  }, [_c("button", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("Search")])]);
 }];
 render._withStripped = true;
 

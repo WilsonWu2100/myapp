@@ -41,7 +41,7 @@ Route::post('/book/{id}/edit', [BookController::class, 'updateBook']);
 Route::delete('/book/{id}/delete', [BookController::class, 'deleteBook'])->name('books.delete');
 
 // Search books.
-Route::get('/search', [BookController::class, 'searchBook'])->name('books.search');
+Route::get('/api/search', [BookController::class, 'searchBook'])->name('books.search');
 
 Auth::routes();
 
