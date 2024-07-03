@@ -26,32 +26,56 @@
             <table id="bookTable" class="w-100 mt-2">
                 <thead>
                 <tr>
-                    <th class="border">ID</th>
                     <th class="border">Image</th>
-                    <th @click="sortBy('name')" class="border">Name
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
+                    <th class="border">Name
+                        <button @click="sortBooks('name', 'asc')"  class="sort-icon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
+                            </svg>
+                        </button>
+                        <button @click="sortBooks('name', 'desc')"  class="sort-icon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                            </svg>
+                        </button>
                     </th>
                     <th class="border">ISBN</th>
                     <th class="border">Author</th>
                     <th class="border">Category</th>
-                    <th class="border">Ratings</th>
-                    <th class="border">Price</th>
+                    <th class="border ratings">Ratings
+                        <button class="sort-icon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
+                            </svg>
+                        </button>
+                        <button class="sort-icon text-white d-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                            </svg>
+                        </button>
+                    </th>
+                    <th class="border price">Price
+                        <button class="sort-icon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
+                            </svg>
+                        </button>
+                        <button class="sort-icon text-white d-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                            </svg>
+                        </button>
+                    </th>
                     <th class="border">Stock</th>
                     <th class="border">Publisher</th>
-                    <th class="border publication_date">Publication Date</th>
+                    <th class="border publication-date">Publication Date</th>
                     <th class="border">Operations</th>
                 </tr>
                 </thead>
                 <tr v-for="(book, index) in this.books.data">
-                    <td class="border">{{ book.id }}</td>
                     <td class="border">
                         <a :href="`/book/${book.id}/edit`">
-                            <img :src="`/images/${book.image}`" class="book_image" alt="book image"/>
+                            <img :src="`/images/${book.image}`" class="book-image" alt="book image"/>
                         </a>
                     </td>
                     <td class="border">
@@ -108,7 +132,9 @@
                 categories: '',
                 books: '',
                 totalPages: 1,
-                search: ''
+                search: '',
+                sortBy: "name",
+                sortOrder: "asc"
             };
         },
 
@@ -140,15 +166,35 @@
             },
 
             linkGen(pageNum) {
-                return pageNum === 1 ? '?' : `?page=${pageNum}`
+                return pageNum === 1 ? '?' : `?page=${pageNum}` + `&sortBy=` + this.sortBy + `&sortOrder=` + this.sortOrder;
             },
 
             // Get all books.
-            async getBooks() {
+            async getBooks(sortBy, sortOrder) {
                 await axios.get(`/api/books` + window.location.search)
                 .then(response => {
                     this.books = response.data;
                     this.totalPages = response.data.last_page;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+
+            async sortBooks(sortBy, sortOrder) {
+                const formData = new FormData();
+                formData.append('sortBy', sortBy);
+                formData.append('sortOrder', sortOrder);
+
+                this.sortBy = sortBy;
+                this.sortOrder = sortOrder;
+
+                await axios.post(`/api/sort`, formData)
+                .then(response => {
+                    this.books = response.data;
+                    this.totalPages = response.data.last_page;
+
+                    console.log(response.data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);

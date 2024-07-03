@@ -15,9 +15,19 @@ class BookController extends Controller
         return view('books');
     }
 
-    public function getAllBooks()
+    public function getAllBooks(Request $request)
     {
-        $books = Book::with('stock')->paginate(10);
+        $sortBy = $request->input('sortBy') ? $request->input('sortBy') : 'name';
+        $sortOrder = $request->input('sortOrder') ? $request->input('sortOrder') : 'asc';
+        $books = Book::with('stock')->orderBy($sortBy, $sortOrder)->paginate(10);
+        return response()->json($books);
+    }
+
+    public function sortAllBooks(Request $request)
+    {
+        $sortBy = $request->input('sortBy') ? $request->input('sortBy') : 'name';
+        $sortOrder = $request->input('sortOrder') ? $request->input('sortOrder') : 'asc';
+        $books = Book::with('stock')->orderBy($sortBy, $sortOrder)->paginate(10);
         return response()->json($books);
     }
 
@@ -73,7 +83,7 @@ class BookController extends Controller
 
         $stock = new Stock;
         $stock->book_id = $book->id;
-        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;;
+        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
         $stock->created_at = now();
         $stock->updated_at = now();
         $stock->save();

@@ -9,7 +9,7 @@ body {
             padding: 10px;
         }
 
-        .book_image {
+        .book-image {
             width: 88px;
             height: 120px;
         }
@@ -19,8 +19,22 @@ body {
             word-wrap: break-word;
         }
 
-        .publication_date {
+        .ratings {
+            width: 108px;
+        }
+
+        .price {
+            width: 96px;
+        }
+
+        .publication-date {
             width: 132px;
+        }
+
+        .sort-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
         }
     }
 

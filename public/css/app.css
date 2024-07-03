@@ -11973,7 +11973,7 @@ body table thead {
 body table td, body table th {
   padding: 10px;
 }
-body table .book_image {
+body table .book-image {
   width: 88px;
   height: 120px;
 }
@@ -11981,8 +11981,19 @@ body table .isbn {
   max-width: 120px;
   word-wrap: break-word;
 }
-body table .publication_date {
+body table .ratings {
+  width: 108px;
+}
+body table .price {
+  width: 96px;
+}
+body table .publication-date {
   width: 132px;
+}
+body table .sort-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 body .btn-primary {
   background: #1560bd !important;

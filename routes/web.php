@@ -22,6 +22,7 @@ Route::get('/', function () {
 // List all books.
 Route::get('/books', [BookController::class, 'showBooks'])->name('books');
 Route::get('/api/books', [BookController::class, 'getAllBooks']);
+Route::post('/api/sort', [BookController::class, 'sortAllBooks']);
 
 // View book details.
 Route::get('/book/{id}/view', [BookController::class, 'showBook']);

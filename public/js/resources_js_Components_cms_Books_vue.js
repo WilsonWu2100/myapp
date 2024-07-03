@@ -30,7 +30,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       categories: '',
       books: '',
       totalPages: 1,
-      search: ''
+      search: '',
+      sortBy: "name",
+      sortOrder: "asc"
     };
   },
   mounted: function mounted() {
@@ -57,10 +59,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     linkGen: function linkGen(pageNum) {
-      return pageNum === 1 ? '?' : "?page=".concat(pageNum);
+      return pageNum === 1 ? '?' : "?page=".concat(pageNum) + "&sortBy=" + this.sortBy + "&sortOrder=" + this.sortOrder;
     },
     // Get all books.
-    getBooks: function getBooks() {
+    getBooks: function getBooks(sortBy, sortOrder) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -80,37 +82,43 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee);
       }))();
     },
-    // Get all categories.
-    getCategories: function getCategories() {
+    sortBooks: function sortBooks(sortBy, sortOrder) {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var formData;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/categories").then(function (response) {
-                _this3.categories = response.data;
+              formData = new FormData();
+              formData.append('sortBy', sortBy);
+              formData.append('sortOrder', sortOrder);
+              _this3.sortBy = sortBy;
+              _this3.sortOrder = sortOrder;
+              _context2.next = 7;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/sort", formData).then(function (response) {
+                _this3.books = response.data;
+                _this3.totalPages = response.data.last_page;
+                console.log(response.data);
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
-            case 2:
+            case 7:
             case "end":
               return _context2.stop();
           }
         }, _callee2);
       }))();
     },
-    // Search books.
-    searchBooks: function searchBooks() {
+    // Get all categories.
+    getCategories: function getCategories() {
       var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search?search=".concat(_this4.search)).then(function (response) {
-                _this4.books = response.data;
-                _this4.totalPages = response.data.last_page;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/categories").then(function (response) {
+                _this4.categories = response.data;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
@@ -119,6 +127,27 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               return _context3.stop();
           }
         }, _callee3);
+      }))();
+    },
+    // Search books.
+    searchBooks: function searchBooks() {
+      var _this5 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search?search=".concat(_this5.search)).then(function (response) {
+                _this5.books = response.data;
+                _this5.totalPages = response.data.last_page;
+              })["catch"](function (error) {
+                console.error('Error fetching data:', error);
+              });
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4);
       }))();
     }
   },
@@ -189,16 +218,16 @@ var render = function render() {
     }
   }, [_c("thead", [_c("tr", [_c("th", {
     staticClass: "border"
-  }, [_vm._v("ID")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
   }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
-    staticClass: "border",
+    staticClass: "border"
+  }, [_vm._v("Name\n                    "), _c("button", {
+    staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.sortBy("name");
+        return _vm.sortBooks("name", "asc");
       }
     }
-  }, [_vm._v("Name\n                    "), _c("svg", {
+  }, [_c("svg", {
     staticClass: "bi bi-caret-up-fill",
     attrs: {
       xmlns: "http://www.w3.org/2000/svg",
@@ -211,7 +240,14 @@ var render = function render() {
     attrs: {
       d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
     }
-  })]), _vm._v(" "), _c("svg", {
+  })])]), _vm._v(" "), _c("button", {
+    staticClass: "sort-icon text-white",
+    on: {
+      click: function click($event) {
+        return _vm.sortBooks("name", "desc");
+      }
+    }
+  }, [_c("svg", {
     staticClass: "bi bi-caret-down-fill",
     attrs: {
       xmlns: "http://www.w3.org/2000/svg",
@@ -224,35 +260,93 @@ var render = function render() {
     attrs: {
       d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
     }
-  })])]), _vm._v(" "), _c("th", {
+  })])])]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Author")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Ratings")]), _vm._v(" "), _c("th", {
-    staticClass: "border"
-  }, [_vm._v("Price")]), _vm._v(" "), _c("th", {
+    staticClass: "border ratings"
+  }, [_vm._v("Ratings\n                    "), _c("button", {
+    staticClass: "sort-icon text-white"
+  }, [_c("svg", {
+    staticClass: "bi bi-caret-up-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+    }
+  })])]), _vm._v(" "), _c("button", {
+    staticClass: "sort-icon text-white d-none"
+  }, [_c("svg", {
+    staticClass: "bi bi-caret-down-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+    }
+  })])])]), _vm._v(" "), _c("th", {
+    staticClass: "border price"
+  }, [_vm._v("Price\n                    "), _c("button", {
+    staticClass: "sort-icon text-white"
+  }, [_c("svg", {
+    staticClass: "bi bi-caret-up-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+    }
+  })])]), _vm._v(" "), _c("button", {
+    staticClass: "sort-icon text-white d-none"
+  }, [_c("svg", {
+    staticClass: "bi bi-caret-down-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+    }
+  })])])]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Publisher")]), _vm._v(" "), _c("th", {
-    staticClass: "border publication_date"
+    staticClass: "border publication-date"
   }, [_vm._v("Publication Date")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Operations")])])]), _vm._v(" "), _vm._l(this.books.data, function (book, index) {
     return _c("tr", [_c("td", {
-      staticClass: "border"
-    }, [_vm._v(_vm._s(book.id))]), _vm._v(" "), _c("td", {
       staticClass: "border"
     }, [_c("a", {
       attrs: {
         href: "/book/".concat(book.id, "/edit")
       }
     }, [_c("img", {
-      staticClass: "book_image",
+      staticClass: "book-image",
       attrs: {
         src: "/images/".concat(book.image),
         alt: "book image"
