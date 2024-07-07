@@ -32,7 +32,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       totalPages: 1,
       search: '',
       sortBy: "name",
-      sortOrder: "asc"
+      sortOrder: "asc",
+      page: 1
     };
   },
   mounted: function mounted() {
@@ -59,23 +60,38 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     linkGen: function linkGen(pageNum) {
-      return pageNum === 1 ? '?' : "?page=".concat(pageNum) + "&sortBy=" + this.sortBy + "&sortOrder=" + this.sortOrder;
+      return pageNum === 1 ? '?' : "?page=" + pageNum + "&sortBy=" + this.sortBy + "&sortOrder=" + this.sortOrder;
     },
     // Get all books.
     getBooks: function getBooks(sortBy, sortOrder) {
-      var _this2 = this;
+      var _arguments = arguments,
+        _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var page, queryString, params;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/books" + window.location.search).then(function (response) {
+              page = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : 1;
+              queryString = window.location.search.substring(1, window.location.search.length);
+              params = new URLSearchParams(queryString);
+              if (sortBy == null || sortBy === "") {
+                sortBy = params.get('sortBy') !== "" && params.get('sortBy') !== null ? params.get('sortBy') : _this2.sortBy;
+              }
+              _this2.sortBy = sortBy;
+              if (sortOrder == null || sortOrder === "") {
+                sortOrder = params.get('sortOrder') !== "" && params.get('sortOrder') !== null ? params.get('sortOrder') : _this2.sortOrder;
+              } else {
+                _this2.sortOrder = sortOrder;
+              }
+              page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : _this2.page;
+              _context.next = 9;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/books" + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page).then(function (response) {
                 _this2.books = response.data;
                 _this2.totalPages = response.data.last_page;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
-            case 2:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -224,7 +240,7 @@ var render = function render() {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.sortBooks("name", "asc");
+        return _vm.getBooks("name", "asc");
       }
     }
   }, [_c("svg", {
@@ -244,7 +260,7 @@ var render = function render() {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.sortBooks("name", "desc");
+        return _vm.getBooks("name", "desc");
       }
     }
   }, [_c("svg", {
@@ -269,7 +285,12 @@ var render = function render() {
   }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
     staticClass: "border ratings"
   }, [_vm._v("Ratings\n                    "), _c("button", {
-    staticClass: "sort-icon text-white"
+    staticClass: "sort-icon text-white",
+    on: {
+      click: function click($event) {
+        return _vm.getBooks("ratings", "asc");
+      }
+    }
   }, [_c("svg", {
     staticClass: "bi bi-caret-up-fill",
     attrs: {
@@ -284,7 +305,12 @@ var render = function render() {
       d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
     }
   })])]), _vm._v(" "), _c("button", {
-    staticClass: "sort-icon text-white d-none"
+    staticClass: "sort-icon text-white",
+    on: {
+      click: function click($event) {
+        return _vm.getBooks("ratings", "desc");
+      }
+    }
   }, [_c("svg", {
     staticClass: "bi bi-caret-down-fill",
     attrs: {
@@ -301,7 +327,12 @@ var render = function render() {
   })])])]), _vm._v(" "), _c("th", {
     staticClass: "border price"
   }, [_vm._v("Price\n                    "), _c("button", {
-    staticClass: "sort-icon text-white"
+    staticClass: "sort-icon text-white",
+    on: {
+      click: function click($event) {
+        return _vm.getBooks("price", "asc");
+      }
+    }
   }, [_c("svg", {
     staticClass: "bi bi-caret-up-fill",
     attrs: {
@@ -316,7 +347,12 @@ var render = function render() {
       d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
     }
   })])]), _vm._v(" "), _c("button", {
-    staticClass: "sort-icon text-white d-none"
+    staticClass: "sort-icon text-white",
+    on: {
+      click: function click($event) {
+        return _vm.getBooks("price", "desc");
+      }
+    }
   }, [_c("svg", {
     staticClass: "bi bi-caret-down-fill",
     attrs: {

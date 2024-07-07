@@ -28,12 +28,12 @@
                 <tr>
                     <th class="border">Image</th>
                     <th class="border">Name
-                        <button @click="sortBooks('name', 'asc')"  class="sort-icon text-white">
+                        <button @click="getBooks('name', 'asc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
                                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
                             </svg>
                         </button>
-                        <button @click="sortBooks('name', 'desc')"  class="sort-icon text-white">
+                        <button @click="getBooks('name', 'desc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                             </svg>
@@ -43,24 +43,24 @@
                     <th class="border">Author</th>
                     <th class="border">Category</th>
                     <th class="border ratings">Ratings
-                        <button class="sort-icon text-white">
+                        <button @click="getBooks('ratings', 'asc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
                                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
                             </svg>
                         </button>
-                        <button class="sort-icon text-white d-none">
+                        <button @click="getBooks('ratings', 'desc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                             </svg>
                         </button>
                     </th>
                     <th class="border price">Price
-                        <button class="sort-icon text-white">
+                        <button @click="getBooks('price', 'asc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
                                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"></path>
                             </svg>
                         </button>
-                        <button class="sort-icon text-white d-none">
+                        <button @click="getBooks('price', 'desc')"  class="sort-icon text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                             </svg>
@@ -134,7 +134,8 @@
                 totalPages: 1,
                 search: '',
                 sortBy: "name",
-                sortOrder: "asc"
+                sortOrder: "asc",
+                page: 1
             };
         },
 
@@ -166,12 +167,29 @@
             },
 
             linkGen(pageNum) {
-                return pageNum === 1 ? '?' : `?page=${pageNum}` + `&sortBy=` + this.sortBy + `&sortOrder=` + this.sortOrder;
+                return pageNum === 1 ? '?' : `?page=` + pageNum + `&sortBy=` + this.sortBy + `&sortOrder=` + this.sortOrder;
             },
 
             // Get all books.
-            async getBooks(sortBy, sortOrder) {
-                await axios.get(`/api/books` + window.location.search)
+            async getBooks(sortBy, sortOrder, page = 1) {
+                const queryString = window.location.search.substring(1, window.location.search.length);
+                const params = new URLSearchParams(queryString);
+
+                if (sortBy == null || sortBy === "") {
+                    sortBy = params.get('sortBy') !== "" && params.get('sortBy') !== null ? params.get('sortBy') : this.sortBy;
+                } {
+                    this.sortBy = sortBy;
+                }
+
+                if (sortOrder == null || sortOrder === "") {
+                    sortOrder = params.get('sortOrder') !== "" && params.get('sortOrder') !== null ? params.get('sortOrder') : this.sortOrder;
+                } else {
+                    this.sortOrder = sortOrder;
+                }
+
+                page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;
+
+                await axios.get(`/api/books` + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page)
                 .then(response => {
                     this.books = response.data;
                     this.totalPages = response.data.last_page;

@@ -17,9 +17,11 @@ class BookController extends Controller
 
     public function getAllBooks(Request $request)
     {
+       // dd($request);
         $sortBy = $request->input('sortBy') ? $request->input('sortBy') : 'name';
         $sortOrder = $request->input('sortOrder') ? $request->input('sortOrder') : 'asc';
-        $books = Book::with('stock')->orderBy($sortBy, $sortOrder)->paginate(10);
+        $page = $request->input('page') ? $request->input('page') : 1;
+        $books = Book::with('stock')->orderBy($sortBy, $sortOrder)->paginate(10, ['*'], 'page', $page);
         return response()->json($books);
     }
 
