@@ -6,7 +6,9 @@ use App\Models\Book;
 use App\Models\Stock;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -17,11 +19,14 @@ class BookController extends Controller
 
     public function getAllBooks(Request $request)
     {
-       // dd($request);
         $sortBy = $request->input('sortBy') ? $request->input('sortBy') : 'name';
         $sortOrder = $request->input('sortOrder') ? $request->input('sortOrder') : 'asc';
         $page = $request->input('page') ? $request->input('page') : 1;
-        $books = Book::with('stock')->orderBy($sortBy, $sortOrder)->paginate(10, ['*'], 'page', $page);
+        $books = DB::table('books')
+            ->join('stocks', 'books.stock_id', '=', 'stocks.id')
+            ->select('books.*', 'stocks.quantity as stock')
+            ->orderBy($sortBy, $sortOrder)
+            ->paginate(10, ['*'], 'page', $page);
         return response()->json($books);
     }
 
@@ -40,7 +45,11 @@ class BookController extends Controller
 
     public function getBook($id)
     {
-        $book = Book::with('stock')->find($id);
+        $book = Book::find($id);
+        if ($book) {
+            $stock = Stock::find($book->stock_id);
+            $book->stock = $stock->quantity ?: 0;
+        }
         return response()->json($book);
     }
 
@@ -51,6 +60,13 @@ class BookController extends Controller
      */
     public function createBook(Request $request)
     {
+        // Save the stock.
+        $stock = new Stock;
+        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
+        $stock->created_at = now();
+        $stock->updated_at = now();
+        $stock->save();
+
         $book = new Book;
 
         // Upload image and save to public/images/ folder
@@ -78,17 +94,11 @@ class BookController extends Controller
         $book->category = $request->input('category');
         $book->ratings = $request->input('ratings') ? $request->input('ratings') : 0;
         $book->price = $request->input('price') ? $request->input('price') : 0;
+        $book->stock_id = $stock->id ?: 0;
         $book->publisher = $request->input('publisher');
         $book->created_at = now();
         $book->updated_at = now();
         $book->save();
-
-        $stock = new Stock;
-        $stock->book_id = $book->id;
-        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
-        $stock->created_at = now();
-        $stock->updated_at = now();
-        $stock->save();
 
         $message = ['message' => 'New book has been added successfully!'];
         return response()->json($message);
@@ -132,9 +142,11 @@ class BookController extends Controller
         $book->updated_at = now();
         $book->update();
 
-        $stock = Stock::where('book_id', $id)->first();
-        $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
-        $stock->update();
+        if ($book->stock_id) {
+            $stock = Stock::find($book->stock_id);
+            $stock->quantity = $request->input('stock') ? $request->input('stock') : 0;
+            $stock->update();
+        }
 
         $message = ['message' => 'The book has been updated successfully!'];
         return response()->json($message);

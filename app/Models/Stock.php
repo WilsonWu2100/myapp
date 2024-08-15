@@ -18,12 +18,11 @@ class Stock extends Model
      * @var array $fillable
      */
     protected $fillable = [
-        'book_id',
         'quantity'
     ];
 
     public function book()
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(Book::class, 'stock_id', 'id');
     }
 }

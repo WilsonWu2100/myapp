@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stocks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('book_id');
+            $table->id('id');
             $table->integer('quantity');
             $table->timestamps();
-            $table->foreign('book_id')->references('id')->on('books');
         });
 
         Artisan::call('db:seed', [

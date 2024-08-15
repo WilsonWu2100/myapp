@@ -27,12 +27,13 @@ class Book extends Model
         'ratings',
         'price',
         'image',
+        'stock_id',
         'publisher',
         'publication_date',
     ];
 
     public function stock()
     {
-        return $this->hasOne(Stock::class);
+        return $this->hasOne(Stock::class, 'stock_id', 'id');
     }
 }

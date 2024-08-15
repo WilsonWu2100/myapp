@@ -24,10 +24,12 @@ class CreateBooksTable extends Migration
             $table->integer('category')->nullable();
             $table->integer('ratings');
             $table->float('price');
+            $table->integer('stock_id')->nullable();
             $table->string('image')->nullable();
             $table->string('publisher')->nullable();
             $table->date('publication_date');
             $table->timestamps();
+            $table->foreign('stock_id')->references('id')->on('stocks');
         });
 
         Artisan::call('db:seed', [

@@ -37,9 +37,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         category: '',
         ratings: '',
         price: 0,
-        stock: {
-          quantity: 0
-        },
+        stock: 0,
         publisher: '',
         publication_date: ''
       },
@@ -65,7 +63,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
 
       // Append stock quantity.
-      formData.append('stock', this.formData.stock.quantity);
+      formData.append('stock', this.formData.stock);
 
       // Append the image file.
       formData.append('image', this.imageFile);
@@ -78,7 +76,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
 
       // Validate Stock.
-      if (isNaN(this.formData.stock.quantity) || this.formData.stock.quantity === '') {
+      if (isNaN(this.formData.stock) || this.formData.stock === '') {
         this.message = 'Please enter a valid Stock.';
         this.alertClass = 'alert-danger';
         return;
@@ -371,8 +369,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.formData.stock.quantity,
-      expression: "formData.stock.quantity"
+      value: _vm.formData.stock,
+      expression: "formData.stock"
     }],
     staticClass: "form-control",
     attrs: {
@@ -380,12 +378,12 @@ var render = function render() {
       name: "stock"
     },
     domProps: {
-      value: _vm.formData.stock.quantity
+      value: _vm.formData.stock
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.formData.stock, "quantity", $event.target.value);
+        _vm.$set(_vm.formData, "stock", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("tr", [_c("td", {

@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                     <td class="border">Stock</td>
-                    <td class="border"><input type='text' name='stock' class="form-control" v-model="formData.stock.quantity"/></td>
+                    <td class="border"><input type='text' name='stock' class="form-control" v-model="formData.stock"/></td>
                 </tr>
                 <tr>
                     <td class="border">Publisher</td>
@@ -99,9 +99,7 @@
                     category: '',
                     ratings: '',
                     price: 0,
-                    stock: {
-                        quantity: 0
-                    },
+                    stock: 0,
                     publisher: '',
                     publication_date: ''
                 },
@@ -142,7 +140,7 @@
                 }
 
                 // Append stock quantity.
-                formData.append('stock', this.formData.stock.quantity);
+                formData.append('stock', this.formData.stock);
 
                 // Update the image file.
                 formData.append('image', this.imageFile);
@@ -155,7 +153,7 @@
                 }
 
                 // Validate Stock.
-                if (isNaN(this.formData.stock.quantity) || this.formData.stock.quantity === '') {
+                if (isNaN(this.formData.stock) || this.formData.stock === '') {
                     this.message = 'Please enter a valid Stock.';
                     this.alertClass = 'alert-danger';
                     return;

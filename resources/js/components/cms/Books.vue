@@ -92,7 +92,7 @@
                     </td>
                     <td class="border">{{ book.ratings }}</td>
                     <td class="border">{{ book.price }}</td>
-                    <td class="border">{{ book.stock.quantity }}</td>
+                    <td class="border">{{ book.stock }}</td>
                     <td class="border">{{ book.publisher }}</td>
                     <td class="border">{{ book.publication_date }}</td>
                     <td class="border">
