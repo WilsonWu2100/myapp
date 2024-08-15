@@ -159,9 +159,6 @@ class BookController extends Controller
      */
     public function deleteBook($id)
     {
-        $stock = Stock::where('book_id', $id)->first();
-        $stock->delete();
-
         $book = Book::find($id);
         $book->delete();
 
@@ -176,7 +173,9 @@ class BookController extends Controller
     public function searchBook(Request $request)
     {
         $search = $request->input('search');
-        $results = Book::with('stock')->where('name', 'like', "%$search%")
+        $results = DB::table('books')
+            ->join('stocks', 'books.stock_id', '=', 'stocks.id')
+            ->select('books.*', 'stocks.quantity as stock')->where('name', 'like', "%$search%")
             ->orWhere('author', 'like', "%$search%")
             ->orWhere('category', 'like', "%$search%")
             ->orWhere('publisher', 'like', "%$search%")
