@@ -2,6 +2,14 @@
     "/js/app.js": "/js/app.js",
     "/js/main.js": "/js/main.js",
     "/css/app.css": "/css/app.css",
-    "/icons/caret-down-fill.svg": "/icons/caret-down-fill.svg",
-    "/icons/caret-up-fill.svg": "/icons/caret-up-fill.svg"
+    "/fonts/icomoon/Read Me.txt": "/fonts/icomoon/Read Me.txt",
+    "/fonts/icomoon/demo-files/demo.css": "/fonts/icomoon/demo-files/demo.css",
+    "/fonts/icomoon/demo-files/demo.js": "/fonts/icomoon/demo-files/demo.js",
+    "/fonts/icomoon/demo.html": "/fonts/icomoon/demo.html",
+    "/fonts/icomoon/fonts/icomoon.eot": "/fonts/icomoon/fonts/icomoon.eot",
+    "/fonts/icomoon/fonts/icomoon.svg": "/fonts/icomoon/fonts/icomoon.svg",
+    "/fonts/icomoon/fonts/icomoon.ttf": "/fonts/icomoon/fonts/icomoon.ttf",
+    "/fonts/icomoon/fonts/icomoon.woff": "/fonts/icomoon/fonts/icomoon.woff",
+    "/fonts/icomoon/selection.json": "/fonts/icomoon/selection.json",
+    "/fonts/icomoon/style.css": "/fonts/icomoon/style.css"
 }

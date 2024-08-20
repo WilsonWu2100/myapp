@@ -12,9 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix
-    .js('resources/js/app.js', 'public/js')
-    .js('resources/js/main.js', 'public/js')
+    .js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/main.js', 'public/js')
     .vue()
-    .sass('resources/scss/app.scss', 'public/css')
-    .copyDirectory('resources/icons', 'public/icons');
-
+    .sass('resources/assets/scss/app.scss', 'public/css')    // Compile main sass file.
+    .copyDirectory('resources/assets/fonts', 'public/fonts'); //Copy fonts
