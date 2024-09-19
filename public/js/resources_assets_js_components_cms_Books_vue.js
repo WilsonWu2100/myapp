@@ -33,10 +33,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       search: '',
       sortBy: "name",
       sortOrder: "asc",
-      page: 1
+      page: 1,
+      sortKey: "",
+      isAscending: true
     };
   },
   mounted: function mounted() {
+    //this.isAscending = !this.isAscending;// Toggle the state
     this.getBooks();
     this.getCategories();
   },
@@ -63,15 +66,23 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return pageNum === 1 ? '?' : "?page=" + pageNum + "&sortBy=" + this.sortBy + "&sortOrder=" + this.sortOrder;
     },
     // Get all books.
-    getBooks: function getBooks(sortBy, sortOrder) {
+    getBooks: function getBooks() {
       var _arguments = arguments,
         _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var page, queryString, params;
+        var sortBy, sortOrder, page, queryString, params;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              sortBy = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : "name";
+              sortOrder = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : "asc";
               page = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : 1;
+              if (_this2.sortKey === "") {
+                _this2.isAscending = true;
+              } else {
+                _this2.isAscending = !_this2.isAscending;
+              }
+              _this2.sortKey = sortBy;
               queryString = window.location.search.substring(1, window.location.search.length);
               params = new URLSearchParams(queryString);
               if (sortBy == null || sortBy === "") {
@@ -84,14 +95,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 _this2.sortOrder = sortOrder;
               }
               page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : _this2.page;
-              _context.next = 9;
+              _context.next = 13;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/books" + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page).then(function (response) {
                 _this2.books = response.data;
                 _this2.totalPages = response.data.last_page;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
-            case 9:
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -240,43 +251,16 @@ var render = function render() {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.getBooks("name", "asc");
+        return _vm.getBooks("name");
       }
     }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-up-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-    }
-  })])]), _vm._v(" "), _c("button", {
-    staticClass: "sort-icon text-white",
-    on: {
-      click: function click($event) {
-        return _vm.getBooks("name", "desc");
-      }
-    }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-down-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-    }
-  })])])]), _vm._v(" "), _c("th", {
+  }, [_vm.sortKey === "name" ? [_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-down-fill"
+  }) : _vm._e()] : _c("i", {
+    staticClass: "icon-caret-up-fill"
+  })], 2)]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
     staticClass: "border"
@@ -284,89 +268,37 @@ var render = function render() {
     staticClass: "border"
   }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
     staticClass: "border ratings"
-  }, [_vm._v("Ratings\n                    "), _c("button", {
+  }, [_vm._v("Ratings"), _c("i", {
+    staticClass: "caret-up-fill"
+  }), _vm._v(" "), _c("button", {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.getBooks("ratings", "asc");
+        return _vm.getBooks("ratings");
       }
     }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-up-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-    }
-  })])]), _vm._v(" "), _c("button", {
-    staticClass: "sort-icon text-white",
-    on: {
-      click: function click($event) {
-        return _vm.getBooks("ratings", "desc");
-      }
-    }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-down-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-    }
-  })])])]), _vm._v(" "), _c("th", {
+  }, [_vm.sortKey === "ratings" ? [_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-down-fill"
+  }) : _vm._e()] : _c("i", {
+    staticClass: "icon-caret-up-fill"
+  })], 2)]), _vm._v(" "), _c("th", {
     staticClass: "border price"
   }, [_vm._v("Price\n                    "), _c("button", {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
-        return _vm.getBooks("price", "asc");
+        return _vm.getBooks("price");
       }
     }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-up-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-    }
-  })])]), _vm._v(" "), _c("button", {
-    staticClass: "sort-icon text-white",
-    on: {
-      click: function click($event) {
-        return _vm.getBooks("price", "desc");
-      }
-    }
-  }, [_c("svg", {
-    staticClass: "bi bi-caret-down-fill",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "16",
-      height: "16",
-      fill: "currentColor",
-      viewBox: "0 0 16 16"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-    }
-  })])])]), _vm._v(" "), _c("th", {
+  }, [_vm.sortKey === "price" ? [_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
+    staticClass: "icon-caret-down-fill"
+  }) : _vm._e()] : _c("i", {
+    staticClass: "icon-caret-up-fill"
+  })], 2)]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
     staticClass: "border"
