@@ -16,15 +16,58 @@
     <body>
         <div id="app">
             <div class="container">
-                <h2>Books Content Management System</h2>
-                <nav class="navbar bg-body-tertiary">
-                    <div class="container-fluid">
+                <div class="row mt-4">
+                    <div class="col text-start">
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            <h2>Books Content Management System</h2>
+                        </a>
+                    </div>
+                    <div class="col text-end">
+                        <ul class="list-inline">
+                            <!-- Authentication Links -->
+                            @guest
+                                @if (Route::has('login'))
+                                    <li class="nav-item list-inline-item">
+                                        <a class="btn btn-outline-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    </li>
+                                @endif
+
+                                @if (Route::has('register'))
+                                    <li class="nav-item list-inline-item">
+                                        <a class="btn btn-outline-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+                                @endif
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }}
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            @endguest
+                        </ul>
+                    </div>
+
+                    <nav class="navbar bg-body-tertiary">
+                        <div class="container-fluid">
                     <span class="navbar-brand">
                         <a href="/books">Home</a>
                     </span>
-                    </div>
-                </nav>
-                @yield('content')
+                        </div>
+                    </nav>
+                    @yield('content')
+                </div>
             </div>
         </div>
     </body>
