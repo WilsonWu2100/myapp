@@ -2,4 +2,6 @@
 2. Category and Stock are now stored in two different tables.
 3. Add field validation. Stock and Price must be a valid number.
 4. Import Icomoon icons.
-5. Add Sorting function. Books can be sorted by Name, Ratings and Price.
+5. Add login and registration page.
+6. Add Sorting function. Books can be sorted by Name, Ratings and Price.
+

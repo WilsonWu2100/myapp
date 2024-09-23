@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::get('/', function () {
-    return view('books');
-});
+    return view('books'); // Your protected page
+})->middleware('auth'); // Protect this route
 
 // List all books.
 Route::get('/books', [BookController::class, 'showBooks'])->name('books');

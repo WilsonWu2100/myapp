@@ -61,9 +61,9 @@
 
                     <nav class="navbar bg-body-tertiary">
                         <div class="container-fluid">
-                    <span class="navbar-brand">
-                        <a href="/books">Home</a>
-                    </span>
+                            <span class="navbar-brand">
+                                <a href="/books">Home</a>
+                            </span>
                         </div>
                     </nav>
                     @yield('content')
