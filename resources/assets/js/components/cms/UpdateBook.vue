@@ -1,0 +1,189 @@
+<template>
+    <div>
+        <div v-if="message">
+            <h5 :class="[alertClass, 'alert']">
+                {{ message }}
+            </h5>
+        </div>
+
+        <form @submit.prevent="updateBook" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td class="border">Name</td>
+                    <td class="border"><input type='text' name='name' class="form-control" v-model="formData.name"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Image</td>
+                    <td class="border">
+                        <div><img :src="imageUrl" class="mb-2" width="auto" height="192" alt="book image"/></div>
+                        <div><input type='file' name='image' class="form-control" @change="handleFileUpload"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border">Isbn</td>
+                    <td class="border"><input type='text' name='isbn' class="form-control" v-model="formData.isbn"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Author</td>
+                    <td class="border"><input type='text' name='author' class="form-control" v-model="formData.author"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Description</td>
+                    <td class="border"><textarea name='description' rows="5" cols="50" class="form-control" v-model="formData.description"></textarea></td>
+                </tr>
+                <tr>
+                    <td class="border">Category</td>
+                    <td class="border">
+                        <select name="category" class="form-select" v-model="formData.category">
+                            <option v-for="category in categories" :value="category.id">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border">Ratings</td>
+                    <td class="border">
+                        <select name="ratings" class="form-select" v-model="formData.ratings">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border">Price</td>
+                    <td class="border"><input type='text' name='price' class="form-control" v-model="formData.price"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Stock</td>
+                    <td class="border"><input type='text' name='stock' class="form-control" v-model="formData.stock"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Publisher</td>
+                    <td class="border"><input type='text' name='publisher' class="form-control" v-model="formData.publisher"/></td>
+                </tr>
+                <tr>
+                    <td class="border">Publication Date</td>
+                    <td class="border"><date-picker type='text' name='publication_date' input-class="form-control" v-model="formData.publication_date"></date-picker></td>
+                </tr>
+                <tr>
+                    <td class="border" colspan='2'>
+                        <input type="hidden" name="book_id" v-model="formData.id">
+                        <input type='submit' class="btn btn-primary" value="Update Book"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</template>
+
+<script>
+    import axios from 'axios';
+    import DatePicker from 'vuejs-datepicker';
+
+    export default {
+        components: { DatePicker },
+
+        data() {
+            return {
+                formData: {
+                    id: '',
+                    name: '',
+                    image: '',
+                    isbn: '',
+                    author: '',
+                    description: '',
+                    category: '',
+                    ratings: '',
+                    price: 0,
+                    stock: 0,
+                    publisher: '',
+                    publication_date: ''
+                },
+                imageUrl: '',
+                message: '',
+                alertClass: '',
+                categories: ''
+            };
+        },
+
+        mounted() {
+            this.fetchBook();
+            this.getCategories();
+        },
+
+        methods: {
+            // Fetch book details.
+            fetchBook() {
+                axios.get('/api' +  window.location.pathname)
+                .then(response => {
+                    this.formData = response.data;
+                    this.imageUrl = '/images/' + response.data['image'];
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+
+            //Update book.
+            updateBook() {
+                const formData = new FormData();
+
+                // Append all form data to formData.
+                for (const key in this.formData) {
+                    if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+                        formData.append(key, this.formData[key]);
+                    }
+                }
+
+                // Append stock quantity.
+                formData.append('stock', this.formData.stock);
+
+                // Update the image file.
+                formData.append('image', this.imageFile);
+
+                // Validate Price.
+                if (isNaN(this.formData.price) || this.formData.price === '') {
+                    this.message = 'Please enter a valid Price.';
+                    this.alertClass = 'alert-danger';
+                    return;
+                }
+
+                // Validate Stock.
+                if (isNaN(this.formData.stock) || this.formData.stock === '') {
+                    this.message = 'Please enter a valid Stock.';
+                    this.alertClass = 'alert-danger';
+                    return;
+                }
+
+                axios.post(window.location.href, formData)
+                .then(response => {
+                    this.message = response.data['message'];
+                    this.alertClass = 'alert-success';
+                })
+                .catch(error => {
+                    console.error('Error saving data:', error);
+                });
+            },
+
+            // Get the uploaded file.
+            handleFileUpload(event) {
+                this.imageFile = event.target.files[0];
+            },
+
+            // Get all categories.
+            async getCategories() {
+                await axios.get(`/api/categories`)
+                .then(response => {
+                    this.categories = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+        }
+    }
+</script>

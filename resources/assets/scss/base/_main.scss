@@ -1,0 +1,44 @@
+body {
+    table {
+        thead {
+            background: #1560bd;
+            color: white;
+        }
+
+        td, th{
+            padding: 10px;
+        }
+
+        .book-image {
+            width: 88px;
+            height: 120px;
+        }
+
+        .isbn {
+            max-width: 120px;
+            word-wrap: break-word;
+        }
+
+        .ratings {
+            width: 108px;
+        }
+
+        .price {
+            width: 96px;
+        }
+
+        .publication-date {
+            width: 132px;
+        }
+
+        .sort-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    .btn-primary {
+        background: #1560bd !important;
+    }
+}
