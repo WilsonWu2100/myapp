@@ -11981,12 +11981,6 @@ body table .isbn {
   max-width: 120px;
   word-wrap: break-word;
 }
-body table .ratings {
-  width: 108px;
-}
-body table .price {
-  width: 96px;
-}
 body table .publication-date {
   width: 132px;
 }

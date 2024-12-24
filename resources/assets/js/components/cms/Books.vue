@@ -27,35 +27,38 @@
                 <thead>
                 <tr>
                     <th class="border">Image</th>
-                    <th class="border">Name
-                        <button @click="getBooks('name')"  class="sort-icon text-white">
-                            <template v-if="sortKey === 'name'">
-                                <i v-if="isAscending" class="icon-caret-up-fill"></i>
-                                <i v-if="!isAscending" class="icon-caret-down-fill"></i>
-                            </template>
-                            <i v-else class="icon-caret-up-fill"></i>
-                        </button>
+                    <th class="border ">
+                        <div class="col d-flex justify-content-between">Name
+                            <button @click="sortBooks('name')"  class="sort-icon text-white right-item">
+                                <i v-if="sortBy === 'name'">
+                                    <i :class="sortOrder === 'asc' ? 'icon-caret-up-fill' : 'icon-caret-down-fill'"></i>
+                                </i>
+                                <i v-else class="icon-sort"></i>
+                            </button>
+                        </div>
                     </th>
                     <th class="border">ISBN</th>
                     <th class="border">Author</th>
                     <th class="border">Category</th>
-                    <th class="border ratings">Ratings<i class="caret-up-fill"></i>
-                        <button @click="getBooks('ratings')"  class="sort-icon text-white">
-                            <template v-if="sortKey === 'ratings'">
-                                <i v-if="isAscending" class="icon-caret-up-fill"></i>
-                                <i v-if="!isAscending" class="icon-caret-down-fill"></i>
-                            </template>
-                            <i v-else class="icon-caret-up-fill"></i>
-                        </button>
+                    <th class="border">
+                        <div class="col d-flex justify-content-between">Ratings
+                            <button @click="getBooks('ratings')"  class="sort-icon text-white">
+                                <i v-if="sortBy === 'ratings'">
+                                    <i :class="sortOrder === 'asc' ? 'icon-caret-up-fill' : 'icon-caret-down-fill'"></i>
+                                </i>
+                                <i v-else class="icon-sort"></i>
+                            </button>
+                        </div>
                     </th>
-                    <th class="border price">Price
-                        <button @click="getBooks('price')"  class="sort-icon text-white">
-                            <template v-if="sortKey === 'price'">
-                                <i v-if="isAscending" class="icon-caret-up-fill"></i>
-                                <i v-if="!isAscending" class="icon-caret-down-fill"></i>
-                            </template>
-                            <i v-else class="icon-caret-up-fill"></i>
-                        </button>
+                    <th class="border">
+                        <div class="d-flex justify-content-between">Price
+                            <button @click="getBooks('price')"  class="sort-icon text-white">
+                                <i v-if="sortBy === 'price'">
+                                    <i :class="sortOrder === 'asc' ? 'icon-caret-up-fill' : 'icon-caret-down-fill'"></i>
+                                </i>
+                                <i v-else class="icon-sort"></i>
+                            </button>
+                        </div>
                     </th>
                     <th class="border">Stock</th>
                     <th class="border">Publisher</th>
@@ -124,8 +127,8 @@
                 books: '',
                 totalPages: 1,
                 search: '',
-                sortBy: "name",
-                sortOrder: "asc",
+                sortBy: "id",  //Default sort by id
+                sortOrder: "desc",  //Default sort direction
                 page: 1,
                 sortKey: "",
                 isAscending: true,
@@ -165,8 +168,35 @@
             },
 
             // Get all books.
-            async getBooks(sortBy = "name", sortOrder = "asc", page = 1) {
-                if (this.sortKey === "") {
+            async getBooks(sortBy = "id", sortOrder = "desc", page = 1) {
+                /*if (sortOrder === "") {
+                    this.sortOrder = "asc";
+                } else {
+                    this.sortOrder = "desc";
+                }*/
+               /* console.log(this.sortBy);
+                if (this.sortBy === 'id') {
+                    //sortBy = this.sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle direction
+                    this.sortBy = 'name';
+                } else {
+                    this.sortBy = 'name';
+                    sortOrder = 'asc'; // Reset to ascending
+                }
+                //this.sortBy = "name";
+                console.log(this.sortBy);*/
+              /*  if (sortBy === 'name') {
+                    sortBy = this.sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle direction
+                } else {
+                    sortBy = 'name';
+                    sortOrder = 'asc'; // Reset to ascending
+                }
+
+                const queryString = window.location.search.substring(1, window.location.search.length);
+                const params = new URLSearchParams(queryString);
+                page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;
+
+                console.log(`/api/books` + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page);*/
+                /*if (this.sortKey === "") {
                     this.isAscending = true;
                 } else {
                     this.isAscending = !this.isAscending;
@@ -179,8 +209,11 @@
                 if (sortBy == null || sortBy === "") {
                     sortBy = params.get('sortBy') !== "" && params.get('sortBy') !== null ? params.get('sortBy') : this.sortBy;
                 } {
+
                     this.sortBy = sortBy;
                 }
+
+                console.log(this.sortBy);
 
                 if (sortOrder == null || sortOrder === "") {
                     sortOrder = params.get('sortOrder') !== "" && params.get('sortOrder') !== null ? params.get('sortOrder') : this.sortOrder;
@@ -188,6 +221,10 @@
                     this.sortOrder = sortOrder;
                 }
 
+                page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;*/
+
+                const queryString = window.location.search.substring(1, window.location.search.length);
+                const params = new URLSearchParams(queryString);
                 page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;
 
                 await axios.get(`/api/books` + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page)
@@ -200,8 +237,8 @@
                 });
             },
 
-            async sortBooks(sortBy, sortOrder) {
-                const formData = new FormData();
+            async sortBooks(sortBy, sortOrder) {  console.log("wosdsf");
+               /* const formData = new FormData();
                 formData.append('sortBy', sortBy);
                 formData.append('sortOrder', sortOrder);
 
@@ -217,7 +254,7 @@
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                });
+                });*/
             },
 
             // Get all categories.

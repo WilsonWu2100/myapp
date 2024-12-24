@@ -31,8 +31,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       books: '',
       totalPages: 1,
       search: '',
-      sortBy: "name",
-      sortOrder: "asc",
+      sortBy: "id",
+      //Default sort by id
+      sortOrder: "desc",
+      //Default sort direction
       page: 1,
       sortKey: "",
       isAscending: true
@@ -74,35 +76,65 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              sortBy = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : "name";
-              sortOrder = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : "asc";
+              sortBy = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : "id";
+              sortOrder = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : "desc";
               page = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : 1;
-              if (_this2.sortKey === "") {
-                _this2.isAscending = true;
+              /*if (sortOrder === "") {
+                  this.sortOrder = "asc";
               } else {
-                _this2.isAscending = !_this2.isAscending;
+                  this.sortOrder = "desc";
+              }*/
+              /* console.log(this.sortBy);
+               if (this.sortBy === 'id') {
+                   //sortBy = this.sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle direction
+                   this.sortBy = 'name';
+               } else {
+                   this.sortBy = 'name';
+                   sortOrder = 'asc'; // Reset to ascending
+               }
+               //this.sortBy = "name";
+               console.log(this.sortBy);*/
+              /*  if (sortBy === 'name') {
+                    sortBy = this.sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle direction
+                } else {
+                    sortBy = 'name';
+                    sortOrder = 'asc'; // Reset to ascending
+                }
+                 const queryString = window.location.search.substring(1, window.location.search.length);
+                const params = new URLSearchParams(queryString);
+                page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;
+                 console.log(`/api/books` + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page);*/
+              /*if (this.sortKey === "") {
+                  this.isAscending = true;
+              } else {
+                  this.isAscending = !this.isAscending;
               }
-              _this2.sortKey = sortBy;
+              this.sortKey = sortBy;
+               const queryString = window.location.search.substring(1, window.location.search.length);
+              const params = new URLSearchParams(queryString);
+               if (sortBy == null || sortBy === "") {
+                  sortBy = params.get('sortBy') !== "" && params.get('sortBy') !== null ? params.get('sortBy') : this.sortBy;
+              } {
+                   this.sortBy = sortBy;
+              }
+               console.log(this.sortBy);
+               if (sortOrder == null || sortOrder === "") {
+                  sortOrder = params.get('sortOrder') !== "" && params.get('sortOrder') !== null ? params.get('sortOrder') : this.sortOrder;
+              } else {
+                  this.sortOrder = sortOrder;
+              }
+               page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : this.page;*/
               queryString = window.location.search.substring(1, window.location.search.length);
               params = new URLSearchParams(queryString);
-              if (sortBy == null || sortBy === "") {
-                sortBy = params.get('sortBy') !== "" && params.get('sortBy') !== null ? params.get('sortBy') : _this2.sortBy;
-              }
-              _this2.sortBy = sortBy;
-              if (sortOrder == null || sortOrder === "") {
-                sortOrder = params.get('sortOrder') !== "" && params.get('sortOrder') !== null ? params.get('sortOrder') : _this2.sortOrder;
-              } else {
-                _this2.sortOrder = sortOrder;
-              }
               page = params.get('page') !== "" && params.get('page') !== null ? params.get('page') : _this2.page;
-              _context.next = 13;
+              _context.next = 8;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/books" + "?" + "sortBy=" + sortBy + "&sortOrder=" + sortOrder + "&page=" + page).then(function (response) {
                 _this2.books = response.data;
                 _this2.totalPages = response.data.last_page;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
-            case 13:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -110,26 +142,26 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }))();
     },
     sortBooks: function sortBooks(sortBy, sortOrder) {
-      var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var formData;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              formData = new FormData();
-              formData.append('sortBy', sortBy);
-              formData.append('sortOrder', sortOrder);
-              _this3.sortBy = sortBy;
-              _this3.sortOrder = sortOrder;
-              _context2.next = 7;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/sort", formData).then(function (response) {
-                _this3.books = response.data;
-                _this3.totalPages = response.data.last_page;
-                console.log(response.data);
-              })["catch"](function (error) {
-                console.error('Error fetching data:', error);
-              });
-            case 7:
+              console.log("wosdsf");
+              /* const formData = new FormData();
+               formData.append('sortBy', sortBy);
+               formData.append('sortOrder', sortOrder);
+                this.sortBy = sortBy;
+               this.sortOrder = sortOrder;
+                await axios.post(`/api/sort`, formData)
+               .then(response => {
+                   this.books = response.data;
+                   this.totalPages = response.data.last_page;
+                    console.log(response.data);
+               })
+               .catch(error => {
+                   console.error('Error fetching data:', error);
+               });*/
+            case 1:
             case "end":
               return _context2.stop();
           }
@@ -138,14 +170,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     // Get all categories.
     getCategories: function getCategories() {
-      var _this4 = this;
+      var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/categories").then(function (response) {
-                _this4.categories = response.data;
+                _this3.categories = response.data;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
@@ -158,15 +190,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     // Search books.
     searchBooks: function searchBooks() {
-      var _this5 = this;
+      var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search?search=".concat(_this5.search)).then(function (response) {
-                _this5.books = response.data;
-                _this5.totalPages = response.data.last_page;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search?search=".concat(_this4.search)).then(function (response) {
+                _this4.books = response.data;
+                _this4.totalPages = response.data.last_page;
               })["catch"](function (error) {
                 console.error('Error fetching data:', error);
               });
@@ -247,58 +279,56 @@ var render = function render() {
     staticClass: "border"
   }, [_vm._v("Image")]), _vm._v(" "), _c("th", {
     staticClass: "border"
-  }, [_vm._v("Name\n                    "), _c("button", {
-    staticClass: "sort-icon text-white",
+  }, [_c("div", {
+    staticClass: "col d-flex justify-content-between"
+  }, [_vm._v("Name\n                        "), _c("button", {
+    staticClass: "sort-icon text-white right-item",
     on: {
       click: function click($event) {
-        return _vm.getBooks("name");
+        return _vm.sortBooks("name");
       }
     }
-  }, [_vm.sortKey === "name" ? [_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-up-fill"
-  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-down-fill"
-  }) : _vm._e()] : _c("i", {
-    staticClass: "icon-caret-up-fill"
-  })], 2)]), _vm._v(" "), _c("th", {
+  }, [_vm.sortBy === "name" ? _c("i", [_c("i", {
+    "class": _vm.sortOrder === "asc" ? "icon-caret-up-fill" : "icon-caret-down-fill"
+  })]) : _c("i", {
+    staticClass: "icon-sort"
+  })])])]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("ISBN")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Author")]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
-    staticClass: "border ratings"
-  }, [_vm._v("Ratings"), _c("i", {
-    staticClass: "caret-up-fill"
-  }), _vm._v(" "), _c("button", {
+    staticClass: "border"
+  }, [_c("div", {
+    staticClass: "col d-flex justify-content-between"
+  }, [_vm._v("Ratings\n                        "), _c("button", {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
         return _vm.getBooks("ratings");
       }
     }
-  }, [_vm.sortKey === "ratings" ? [_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-up-fill"
-  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-down-fill"
-  }) : _vm._e()] : _c("i", {
-    staticClass: "icon-caret-up-fill"
-  })], 2)]), _vm._v(" "), _c("th", {
-    staticClass: "border price"
-  }, [_vm._v("Price\n                    "), _c("button", {
+  }, [_vm.sortBy === "ratings" ? _c("i", [_c("i", {
+    "class": _vm.sortOrder === "asc" ? "icon-caret-up-fill" : "icon-caret-down-fill"
+  })]) : _c("i", {
+    staticClass: "icon-sort"
+  })])])]), _vm._v(" "), _c("th", {
+    staticClass: "border"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between"
+  }, [_vm._v("Price\n                        "), _c("button", {
     staticClass: "sort-icon text-white",
     on: {
       click: function click($event) {
         return _vm.getBooks("price");
       }
     }
-  }, [_vm.sortKey === "price" ? [_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-up-fill"
-  }) : _vm._e(), _vm._v(" "), !_vm.isAscending ? _c("i", {
-    staticClass: "icon-caret-down-fill"
-  }) : _vm._e()] : _c("i", {
-    staticClass: "icon-caret-up-fill"
-  })], 2)]), _vm._v(" "), _c("th", {
+  }, [_vm.sortBy === "price" ? _c("i", [_c("i", {
+    "class": _vm.sortOrder === "asc" ? "icon-caret-up-fill" : "icon-caret-down-fill"
+  })]) : _c("i", {
+    staticClass: "icon-sort"
+  })])])]), _vm._v(" "), _c("th", {
     staticClass: "border"
   }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
     staticClass: "border"
